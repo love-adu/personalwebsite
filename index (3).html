@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>love adu</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background-color: #fff;
+  background-image: radial-gradient(#d8d8d8 1.1px, transparent 1.1px);
+  background-size: 24px 24px;
+  color: #0a0a0a;
+  font-family: "Space Grotesk", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+}
+a {
+  color: #0a0a0a;
+  font-weight: 700;
+  text-decoration: none;
+  background-image: linear-gradient(120deg, rgba(255,138,138,.45), rgba(255,138,138,.45));
+  background-repeat: no-repeat;
+  background-size: 100% 0.9em;
+  background-position: 0 88%;
+  padding: 0 1px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+a:hover { background-image: linear-gradient(120deg, rgba(28,63,216,.4), rgba(28,63,216,.4)); }
+
+.intro-line {
+  position: relative;
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  animation: sketch-draw 0.9s ease-out 1.9s forwards;
+}
+.intro-line::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -8px;
+  width: 100%; height: 10px;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10'%3E%3Cpath d='M2,5 Q20,0 40,5 T80,5 T120,5 T160,5 T198,5' stroke='%23e85a5a' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 200px 10px;
+}
+@keyframes sketch-draw { to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .intro-line { animation: none; clip-path: inset(0 0 0 0); }
+}
+
+.wrap { max-width: 680px; margin: 0 auto; padding: 60px 28px 40px; }
+@media (min-width: 1000px) {
+  .wrap { max-width: 980px; padding: 70px 40px 50px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; align-items: start; }
+  .row.row-intro { grid-template-columns: 2.1fr 1fr; }
+  .photo-frame { margin-right: -34px; }
+}
+
+h1 {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-size: 62px;
+  margin: 0 0 30px;
+  color: #0a0a0a;
+  text-shadow: 5px 5px 0 #d81e2c, 10px 10px 0 #1c3fd8;
+}
+
+h2 {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  display: inline-block;
+  margin: 50px 0 20px;
+  background: #0a0a0a;
+  color: #fff;
+  padding: 8px 16px;
+  transform: skew(-3deg);
+}
+h2 span { display: inline-block; transform: skew(3deg); }
+h2.tight { margin-top: 14px; }
+
+p { margin: 0 0 22px; }
+
+.photo-frame {
+  position: relative;
+  display: inline-block;
+  transform: rotate(-4deg);
+  margin: 26px 18px 26px 0;
+  float: right;
+}
+.photo-frame img {
+  display: block;
+  border: 10px solid #fff;
+  outline: 3px solid #0a0a0a;
+  box-shadow: 6px 6px 0 #d81e2c, 12px 12px 0 #1c3fd8;
+}
+.photo-frame .tape {
+  position: absolute;
+  width: 70px; height: 26px;
+  background: rgba(255, 240, 150, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+.photo-frame .tape-a { top: -14px; left: 20px; transform: rotate(-8deg); }
+.photo-frame .tape-b { bottom: -14px; right: 10px; transform: rotate(6deg); }
+@media (max-width: 560px) {
+  .photo-frame { float: none; display: block; margin: 0 auto 26px; }
+}
+
+.jump { list-style: none; margin: 0 0 40px; padding: 14px 18px; border: 3px solid #0a0a0a; display: flex; flex-wrap: wrap; justify-content: center; text-align: center; gap: 8px 20px; }
+.jump li { font-size: 14px; }
+.jump li::before { content: "\2192\a0"; font-weight: 700; color: #d81e2c; }
+
+section.flash { animation: flash-hit 1.2s ease-out; }
+@keyframes flash-hit {
+  0% { background-color: rgba(216,30,44,.16); box-shadow: 0 0 0 6px rgba(216,30,44,.16); }
+  100% { background-color: transparent; box-shadow: 0 0 0 0 rgba(216,30,44,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  section.flash { animation: none; }
+}
+
+.cal { list-style: none; margin: 0 0 24px; padding: 0; border: 3px solid #0a0a0a; }
+.cal li { display: flex; gap: 16px; padding: 12px 16px; border-bottom: 3px solid #0a0a0a; align-items: baseline; }
+.cal li:last-child { border-bottom: none; }
+.cal li:nth-child(odd) { background: #fafafa; }
+.cal-date { font-family: "Archivo Black", sans-serif; font-size: 13px; color: #fff; background: #1c3fd8; padding: 3px 9px; white-space: nowrap; }
+.cal li:nth-child(even) .cal-date { background: #d81e2c; }
+.cal-what { font-size: 15px; }
+
+.dots { list-style: none; margin: 0 0 24px; padding: 0; }
+.dots li { position: relative; padding-left: 30px; margin-bottom: 14px; }
+.dots li::before {
+  content: "";
+  position: absolute; left: 0; top: 5px;
+  width: 15px; height: 15px;
+}
+.dots li:nth-child(odd)::before { background: #d81e2c; }
+.dots li:nth-child(even)::before { background: #1c3fd8; }
+
+.subdots { list-style: none; margin: 10px 0 0; padding: 0; }
+.subdots li { position: relative; padding-left: 22px; margin-bottom: 10px; font-size: 15px; color: #222; }
+.subdots li::before {
+  content: "";
+  position: absolute; left: 0; top: 6px;
+  width: 9px; height: 9px;
+  background: #0a0a0a;
+}
+
+.btn {
+  display: inline-block;
+  background: #0a0a0a;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 18px;
+  margin: 4px 0 18px;
+  box-shadow: 5px 5px 0 #d81e2c, 10px 10px 0 #1c3fd8;
+}
+.btn:hover { transform: translate(-2px, -2px); }
+
+.net-box { border: 3px solid #0a0a0a; background: #fafafa; padding: 8px 8px 0; margin: 18px 0; }
+#net-svg { width: 100%; height: auto; display: block; touch-action: none; }
+.net-edge { fill: none; stroke: #b7b7b7; stroke-width: 1.8; }
+.net-edge.active { stroke: #0a0a0a; stroke-width: 2.6; }
+.net-edge.dim { opacity: .15; }
+.net-edge.flow { stroke-dasharray: 5 6; animation: flowdash 1.1s linear infinite; }
+@keyframes flowdash { to { stroke-dashoffset: -22; } }
+.net-node { cursor: grab; }
+.net-node:active { cursor: grabbing; }
+.net-node text { font-size: 12px; font-weight: 700; fill: #0a0a0a; pointer-events: none; font-family: "Space Grotesk", sans-serif; }
+.net-node.dim circle { opacity: .25; }
+.net-node.dim text { opacity: .3; }
+.net-node.active circle { stroke-width: 3.5; }
+.net-node.method circle { fill: #dce6ff; stroke: #1c3fd8; }
+.net-node.branch-c circle { fill: #e6e6e6; stroke: #0a0a0a; }
+.net-node.branch-b circle { fill: #fbdbdd; stroke: #d81e2c; }
+.net-node.hub circle { fill: #d81e2c; stroke: #d81e2c; }
+.net-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 10px 4px 12px; font-size: 12px; color: #444; }
+.net-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.net-legend i { width: 10px; height: 10px; display: inline-block; border-width: 2px; border-style: solid; }
+
+.splash {
+  position: fixed; inset: 0; z-index: 999;
+  background: #0a0a0a;
+  display: flex; align-items: center; justify-content: center;
+  animation: splash-leave 0.7s ease-in 1.35s forwards;
+}
+.splash b {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-size: 22vw;
+  color: #fff;
+  text-shadow: 8px 8px 0 #d81e2c, 16px 16px 0 #1c3fd8;
+  animation: splash-enter 0.65s cubic-bezier(.2, 1.6, .3, 1) both;
+}
+@keyframes splash-enter {
+  0% { transform: scale(.25) rotate(-10deg); opacity: 0; }
+  65% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes splash-leave {
+  to { transform: translateY(-100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash { display: none; }
+}
+
+.rail {
+  position: fixed; top: 0; bottom: 0; width: 10px;
+  display: flex; gap: 2px; z-index: 5; pointer-events: none;
+}
+.rail.left { left: 0; }
+.rail.right { right: 0; }
+.rail i {
+  flex: 1; height: 220%;
+  background: repeating-linear-gradient(0deg, currentColor 0 26px, transparent 26px 52px);
+}
+.rail.left i:nth-child(1) { color: #d81e2c; animation: rail-up 3.2s linear infinite; }
+.rail.left i:nth-child(2) { color: #1c3fd8; animation: rail-down 4.1s linear infinite; }
+.rail.right i:nth-child(1) { color: #1c3fd8; animation: rail-down 2.6s linear infinite; }
+.rail.right i:nth-child(2) { color: #0a0a0a; animation: rail-up 3.8s linear infinite; }
+@keyframes rail-up { from { transform: translateY(0); } to { transform: translateY(-52px); } }
+@keyframes rail-down { from { transform: translateY(-52px); } to { transform: translateY(0); } }
+@media (max-width: 900px) { .rail { display: none; } }
+@media (prefers-reduced-motion: reduce) { .rail i { animation: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="splash" id="splash"><b>hi</b></div>
+
+<div class="rail left"><i></i><i></i></div>
+<div class="rail right"><i></i><i></i></div>
+
+<div class="wrap">
+  <h1>love adu</h1>
+
+  <ul class="jump">
+    <li><a href="#updates">updates</a></li>
+    <li><a href="#written">work i've written</a></li>
+    <li><a href="#interests">research interests</a></li>
+    <li><a href="#research">my research network</a></li>
+    <li><a href="#contact">say hi</a></li>
+  </ul>
+
+  <div class="row row-intro">
+    <section>
+      <h2 class="tight"><span>welcome!</span></h2>
+      <div class="photo-frame">
+        <img src="loveheadshot.png" alt="pls pick a good photo lmao" width="220" height="260">
+        <span class="tape tape-a"></span>
+        <span class="tape tape-b"></span>
+      </div>
+      <p class="intro-line">Hey! My name is <a href="mailto:loveadu@berkeley.edu">Love Adu</a>.</p>
+      <p>I study platform governance, discourse, and the political economy of technology at <a href="#research">UC Berkeley</a>.</p>
+      <p>I used to be a member of the Board of Governors for the California Community Colleges (appointed by Governor Newsom), and I've done research and policy work at Haas, the Oxford Computational Political Science Group, OutVote, IRLE @ Berkeley, the California Department of Technology, Issue One, the Roosevelt Network, Groundwork Collaborative, and a few other places.</p>
+      <p>On the side I spend too much time dancing to early 2000s Beyonc&eacute; albums, thinking about the consequences of modern technology, and eating mango yogurt (shoutout Hui Lau Shan @ Berkeley).</p>
+    </section>
+
+    <section id="updates">
+      <h2 class="tight"><span>updates</span></h2>
+      <ul class="cal">
+        <li><span class="cal-date">aug 6</span><span class="cal-what">presenting at the <strong>ASA CITMAS Media Sociology Symposium</strong></span></li>
+        <li><span class="cal-date">2026</span><span class="cal-what">attending <strong>ACM FAccT</strong></span></li>
+        <li><span class="cal-date">2027</span><span class="cal-what">attending <strong>CHI</strong></span></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="row">
+    <section id="written">
+      <h2><span>work i've written</span></h2>
+      <p><a class="btn" href="Love_Adu_CV.pdf" download>full cv (pdf)</a></p>
+      <ul class="dots">
+        <li><strong>&ldquo;The Wall Against Competition: Big Tech's Exceptionalist Positioning and the Regulatory Immunity of Section 230&rdquo;</strong>: how dominant tech firms use Silicon Valley exceptionalism to build a policy wall against regulatory accountability. <em>Roosevelt Network</em>, pending 2027.</li>
+        <li><strong>&ldquo;Guilty by Retweet: Engagement Metrics as Infrastructure for Moral Attribution&rdquo;</strong>: on how likes and retweets function as symbolic currency for collective boundary-work. <em>ASA CITMAS Media Sociology Symposium</em>.</li>
+        <li><strong>&ldquo;The Artifice of Algorithmic Autonomy&rdquo;</strong>: a computational text analysis of ~957,000 articles on how anthropomorphizing AI diffuses institutional responsibility. <em>UC Berkeley CITRIS Tech Policy Symposium</em>, 2026.</li>
+        <li><strong>&ldquo;Algorithmic Curation and Its Effects on LGBTQ Youth Civic Engagement&rdquo;</strong>: on how social platforms shape queer voter outreach and political discourse. <em>OutVote HQ</em>.</li>
+      </ul>
+    </section>
+
+    <section id="interests">
+      <h2><span>research interests</span></h2>
+      <p>Two paths I keep circling back to:</p>
+      <ul class="dots">
+        <li>
+          <strong>offline &rarr; online:</strong> how offline rhetoric from the tech industry has shaped culture, and through culture, socioeconomic and sociopolitical conditions, via law, policy, and media.
+          <ul class="subdots">
+            <li>The anthropomorphization of AI agents in tech advertising, media, and marketing.</li>
+            <li>Big Tech's exceptionalist, &ldquo;not like other girls&rdquo; contrarian positioning, and how it's helped keep Section 230 without reform.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>online &rarr; offline:</strong> how online society and culture operate on their own terms, and how that in turn influences socioeconomic and sociopolitical formations and dynamics.
+          <ul class="subdots">
+            <li>The anthropomorphization of AI agents, and its implications for subliminal formations in users about expectations of dominated labor.</li>
+            <li>Cancel culture and online engagement metrics as moral economies, possibly an extension of not getting justice for racism, sexism, and immoral behavior broadly offline, so people go looking for it online instead, as a kind of vigilante justice.</li>
+            <li>With AI and bots in comment sections, and other people's comments shaping the moral read of a situation: how much of our morality is actually our own?</li>
+            <li>The rhetoric and formation of hate speech online, particularly in racist, queerphobic, and misogynistic registers.</li>
+            <li>Lolcows, memes, and the rhetoric of hate online.</li>
+            <li>Eugenics via &ldquo;looksmaxing,&rdquo; and its sociohistorical lineage.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <section id="research">
+    <h2><span>my research network</span></h2>
+
+    <div class="net-box">
+      <svg id="net-svg" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="net-legend">
+        <span><i style="background:#dce6ff; border-color:#1c3fd8;"></i>lenses (comp ling, culture, social theory, rhetoric)</span>
+        <span><i style="background:#e6e6e6; border-color:#0a0a0a;"></i>mechanisms (tech industry, law, media, policy)</span>
+        <span><i style="background:#fbdbdd; border-color:#d81e2c;"></i>effects (governance, institutional power, political economy of tech)</span>
+        <span><i style="background:#d81e2c; border-color:#d81e2c;"></i>consequences (socioeconomic conditions, inequality)</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2><span>say hi</span></h2>
+    <p>Email: <a href="mailto:loveadu@berkeley.edu">loveadu@berkeley.edu</a><br>
+    <a href="https://linkedin.com/in/love-adu-868458233/">LinkedIn</a></p>
+  </section>
+</div>
+
+
+<script>
+var jumpLinks = document.querySelectorAll(".jump a")
+jumpLinks.forEach(function (link) {
+  link.addEventListener("click", function (ev) {
+    var id = link.getAttribute("href").slice(1)
+    var target = document.getElementById(id)
+    if (!target) return
+    ev.preventDefault()
+    target.scrollIntoView({ behavior: "smooth", block: "start" })
+    target.classList.remove("flash")
+    window.requestAnimationFrame(function () {
+      target.classList.add("flash")
+    })
+    setTimeout(function () { target.classList.remove("flash") }, 1300)
+  })
+})
+
+var splash = document.getElementById("splash")
+if (splash) {
+  document.body.style.overflow = "hidden"
+  splash.addEventListener("animationend", function (ev) {
+    if (ev.target === splash) document.body.style.overflow = ""
+  })
+}
+
+var svgNS = "http://www.w3.org/2000/svg"
+
+var nodes = [
+  { id: "complx", x: 80, y: 60, r: 14, side: "right", type: "method", label: "Computational Linguistics",
+    desc: "Computational methods — NLP, corpus analysis — for studying discourse at scale." },
+  { id: "culture", x: 80, y: 170, r: 14, side: "right", type: "method", label: "Culture",
+    desc: "The shared symbols, norms, and practices that get reproduced and contested through discourse." },
+  { id: "social_theory", x: 80, y: 280, r: 14, side: "right", type: "method", label: "Social Theory",
+    desc: "Frameworks for reading discourse as a site of power — Fairclough, Wodak, Foucault, van Dijk." },
+  { id: "rhetoric", x: 80, y: 390, r: 14, side: "right", type: "method", label: "Rhetoric",
+    desc: "The study of persuasion and framing — how language does institutional work." },
+
+  { id: "techprac", x: 370, y: 60, r: 14, side: "right", type: "branch-c", label: "Tech Industry Practices",
+    desc: "The tech industry's own sociocultural and rhetorical practices — how it talks about itself." },
+  { id: "law", x: 370, y: 170, r: 14, side: "right", type: "branch-c", label: "Law",
+    desc: "Law as a mechanism through which discourse becomes binding institutional power." },
+  { id: "media", x: 370, y: 280, r: 14, side: "right", type: "branch-c", label: "Media",
+    desc: "Media as a mechanism through which discourse reaches and shapes publics." },
+  { id: "policy", x: 370, y: 390, r: 14, side: "right", type: "branch-c", label: "Policy",
+    desc: "Policy as a mechanism through which discourse becomes enforceable rules." },
+
+  { id: "governance", x: 640, y: 90, r: 18, side: "left", type: "branch-b", label: "Governance",
+    desc: "The resulting governance regimes — who gets to set the rules, and how." },
+  { id: "instpower", x: 640, y: 260, r: 18, side: "left", type: "branch-b", label: "Institutional Power",
+    desc: "Institutional power and marginalization — who those rules end up protecting, and who they don't." },
+  { id: "econtech", x: 640, y: 430, r: 18, side: "left", type: "branch-b", label: "Political Economy of Tech",
+    desc: "The economic incentives and ownership structures underneath the tech industry." },
+
+  { id: "socioecon", x: 850, y: 200, r: 14, side: "left", type: "hub", label: "Socioeconomic Conditions",
+    desc: "Contemporary socioeconomic conditions — shaped by, and reshaping, the tech industry." },
+  { id: "inequality", x: 850, y: 350, r: 14, side: "left", type: "hub", label: "Inequality",
+    desc: "The distributive stakes — who bears the cost of these economic arrangements." },
+]
+
+var edges = [
+  ["complx", "techprac"], ["complx", "law"], ["complx", "media"], ["complx", "policy"],
+  ["culture", "techprac"], ["culture", "law"], ["culture", "media"], ["culture", "policy"],
+  ["social_theory", "techprac"], ["social_theory", "law"], ["social_theory", "media"], ["social_theory", "policy"],
+  ["rhetoric", "techprac"], ["rhetoric", "law"], ["rhetoric", "media"], ["rhetoric", "policy"],
+  ["techprac", "governance"], ["techprac", "instpower"], ["techprac", "econtech"],
+  ["law", "governance"], ["law", "instpower"], ["law", "econtech"],
+  ["media", "governance"], ["media", "instpower"], ["media", "econtech"],
+  ["policy", "governance"], ["policy", "instpower"], ["policy", "econtech"],
+  ["governance", "socioecon"], ["governance", "inequality"],
+  ["instpower", "socioecon"], ["instpower", "inequality"],
+  ["econtech", "socioecon"], ["econtech", "inequality"],
+]
+
+var svg = document.getElementById("net-svg")
+
+if (svg) {
+
+  var byId = {}
+  for (var i = 0; i < nodes.length; i++) byId[nodes[i].id] = nodes[i]
+
+  var adj = {}
+  for (var i = 0; i < nodes.length; i++) adj[nodes[i].id] = []
+  for (var j = 0; j < edges.length; j++) {
+    adj[edges[j][0]].push(edges[j][1])
+    adj[edges[j][1]].push(edges[j][0])
+  }
+
+  function el(tag, attrs) {
+    var e = document.createElementNS(svgNS, tag)
+    for (var k in attrs) e.setAttribute(k, attrs[k])
+    return e
+  }
+
+  var defs = el("defs", {})
+  var arrow = el("marker", { id: "arrowhead", markerWidth: 8, markerHeight: 8, refX: 6, refY: 4, orient: "auto" })
+  arrow.appendChild(el("path", { d: "M0,0 L8,4 L0,8 z", fill: "#b7b7b7" }))
+  defs.appendChild(arrow)
+  svg.appendChild(defs)
+
+  var edgeLayer = el("g", {})
+  var nodeLayer = el("g", {})
+  svg.appendChild(edgeLayer)
+  svg.appendChild(nodeLayer)
+
+  function pathBetween(s, t) {
+    var dx = t.x - s.x, dy = t.y - s.y
+    var dist = Math.sqrt(dx * dx + dy * dy) || 1
+    var ux = dx / dist, uy = dy / dist
+    var sx = s.x + ux * (s.r + 2), sy = s.y + uy * (s.r + 2)
+    var tx = t.x - ux * (t.r + 10), ty = t.y - uy * (t.r + 10)
+    return "M" + sx.toFixed(1) + "," + sy.toFixed(1) + " L" + tx.toFixed(1) + "," + ty.toFixed(1)
+  }
+
+  var edgeEls = []
+  for (var i = 0; i < edges.length; i++) {
+    var e = edges[i]
+    var path = el('path', {
+      class: 'net-edge flow',
+      d: pathBetween(byId[e[0]], byId[e[1]]),
+      "marker-end": "url(#arrowhead)"
+    })
+    path.dataset.source = e[0]
+    path.dataset.target = e[1]
+    edgeLayer.appendChild(path)
+    edgeEls.push(path)
+  }
+
+  function moveEdges(id) {
+    for (var i = 0; i < edgeEls.length; i++) {
+      var p = edgeEls[i]
+      if (p.dataset.source === id || p.dataset.target === id) {
+        p.setAttribute("d", pathBetween(byId[p.dataset.source], byId[p.dataset.target]))
+      }
+    }
+  }
+
+  var nodeEls = {}
+  var pinned = null
+
+  nodes.forEach(function (n) {
+    var g = el("g", { class: "net-node " + n.type, transform: "translate(" + n.x + "," + n.y + ")" })
+    var circle = el("circle", { r: n.r, "stroke-width": 2 })
+    var off = n.r + 8
+    var tx = n.side === "left" ? -off : off
+    var anchor = n.side === "left" ? "end" : "start"
+    var text = el("text", { x: tx, y: 4, "text-anchor": anchor })
+    text.textContent = n.label
+    g.appendChild(circle)
+    g.appendChild(text)
+    nodeLayer.appendChild(g)
+    nodeEls[n.id] = g
+
+    var moved = false
+    var startX = 0, startY = 0
+
+    function svgPt(clientX, clientY) {
+      var pt = svg.createSVGPoint()
+      pt.x = clientX
+      pt.y = clientY
+      var ctm = svg.getScreenCTM()
+      if (!ctm) return { x: n.x, y: n.y }
+      var loc = pt.matrixTransform(ctm.inverse())
+      return { x: loc.x, y: loc.y }
+    }
+
+    function onMove(ev) {
+      var p = svgPt(ev.clientX, ev.clientY)
+      if (Math.abs(p.x - startX) > 2 || Math.abs(p.y - startY) > 2) moved = true
+      n.x = p.x
+      n.y = p.y
+      g.setAttribute("transform", "translate(" + n.x + "," + n.y + ")")
+      moveEdges(n.id)
+    }
+    function onUp() {
+      document.removeEventListener("pointermove", onMove)
+      document.removeEventListener("pointerup", onUp)
+      if (!moved) select(n.id)
+    }
+
+    g.addEventListener("pointerdown", function (ev) {
+      moved = false
+      var p = svgPt(ev.clientX, ev.clientY)
+      startX = p.x
+      startY = p.y
+      document.addEventListener("pointermove", onMove)
+      document.addEventListener("pointerup", onUp)
+    })
+    g.addEventListener("mouseenter", function () { if (!pinned) highlight(n.id) })
+    g.addEventListener("mouseleave", function () { if (!pinned) reset() })
+  })
+
+  function highlight(id) {
+    var group = adj[id].concat([id])
+    nodes.forEach(function (n) {
+      var g = nodeEls[n.id]
+      g.classList.toggle("dim", group.indexOf(n.id) === -1)
+      g.classList.toggle("active", n.id === id)
+    })
+    edgeEls.forEach(function (p) {
+      var touches = p.dataset.source === id || p.dataset.target === id
+      p.classList.toggle("active", touches)
+      p.classList.toggle("dim", !touches)
+    })
+  }
+
+  function reset() {
+    nodes.forEach(function (n) { nodeEls[n.id].classList.remove("dim", "active") })
+    edgeEls.forEach(function (p) { p.classList.remove("dim", "active") })
+  }
+
+  function select(id) {
+    if (pinned === id) {
+      pinned = null
+      reset()
+      return
+    }
+    pinned = id
+    highlight(id)
+  }
+
+  svg.addEventListener("pointerdown", function (ev) {
+    if (ev.target === svg) {
+      pinned = null
+      reset()
+    }
+  })
+}
+</script>
+</body>
+</html>
