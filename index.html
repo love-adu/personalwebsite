@@ -4,21 +4,58 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>love adu</title>
+<script>
+try {
+  var t = localStorage.getItem("theme")
+  if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark"
+  if (t === "dark") document.documentElement.setAttribute("data-theme", "dark")
+} catch (e) {}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+:root {
+  --bg: #fff;
+  --text: #0a0a0a;
+  --dot: #d8d8d8;
+  --ink: #0a0a0a;
+  --ink-text: #fff;
+  --muted: #444;
+  --panel: #fafafa;
+  --scroll-color: var(--ink);
+}
+[data-theme="dark"] {
+  --bg: #121314;
+  --text: #f0f0f0;
+  --dot: #2a2c2e;
+  --ink: #f0f0f0;
+  --ink-text: #121314;
+  --muted: #aaa;
+  --panel: #1c1e1f;
+}
+
 * { box-sizing: border-box; }
+html { scrollbar-color: var(--scroll-color) var(--bg); scrollbar-width: thin; }
 body {
   margin: 0;
-  background-color: #fff;
-  background-image: radial-gradient(#d8d8d8 1.1px, transparent 1.1px);
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.1px, transparent 1.1px);
   background-size: 24px 24px;
-  color: #0a0a0a;
+  color: var(--text);
   font-family: "Space Grotesk", Helvetica, Arial, sans-serif;
   font-size: 17px;
   line-height: 1.7;
 }
+::-webkit-scrollbar { width: 14px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-color);
+  border: 3px solid var(--bg);
+  background-clip: padding-box;
+  transition: background-color .25s ease;
+}
+
 a {
-  color: #0a0a0a;
+  color: var(--text);
   font-weight: 700;
   text-decoration: none;
   background-image: linear-gradient(120deg, rgba(255,138,138,.45), rgba(255,138,138,.45));
@@ -31,31 +68,118 @@ a {
 }
 a:hover { background-image: linear-gradient(120deg, rgba(28,63,216,.4), rgba(28,63,216,.4)); }
 
-.intro-line {
-  position: relative;
-  display: inline-block;
-  clip-path: inset(0 100% 0 0);
-  animation: sketch-draw 0.9s ease-out 1.9s forwards;
-}
-.intro-line::after {
-  content: "";
-  position: absolute;
-  left: 0; bottom: -8px;
-  width: 100%; height: 10px;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10'%3E%3Cpath d='M2,5 Q20,0 40,5 T80,5 T120,5 T160,5 T198,5' stroke='%23e85a5a' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-size: 200px 10px;
-}
-@keyframes sketch-draw { to { clip-path: inset(0 0 0 0); } }
-@media (prefers-reduced-motion: reduce) {
-  .intro-line { animation: none; clip-path: inset(0 0 0 0); }
-}
-
 .wrap { max-width: 680px; margin: 0 auto; padding: 60px 28px 40px; }
 @media (min-width: 1000px) {
-  .wrap { max-width: 980px; padding: 70px 40px 50px; }
+  .wrap { max-width: 1100px; padding: 70px 44px 50px; }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; align-items: start; }
   .row.row-intro { grid-template-columns: 2.1fr 1fr; }
+}
+@media (min-width: 1400px) {
+  body { font-size: 18px; }
+  .wrap { max-width: 1320px; }
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 50;
+  width: 40px; height: 40px;
+  border: 3px solid var(--ink);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+
+.edit-toggle {
+  position: fixed;
+  top: 16px; right: 64px;
+  z-index: 50;
+  width: 40px; height: 40px;
+  border: 3px solid var(--ink);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+body.editing .edit-toggle { background: #d81e2c; color: #fff; border-color: #d81e2c; }
+
+.edit-only { display: none; }
+body.editing .edit-only { display: inline-block; }
+
+body.editing [contenteditable="true"] {
+  outline: 2px dashed #1c3fd8;
+  outline-offset: 3px;
+  cursor: text;
+}
+
+.del-btn {
+  display: none;
+  border: 2px solid var(--ink);
+  background: var(--bg);
+  color: var(--text);
+  width: 22px; height: 22px;
+  line-height: 1;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: auto;
+  flex: none;
+}
+body.editing .cal li { position: relative; }
+body.editing .del-btn { display: inline-flex; align-items: center; justify-content: center; }
+.post { position: relative; }
+.post .del-btn { position: absolute; top: 10px; right: 10px; z-index: 2; }
+
+.edit-bar {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  background: var(--ink); color: var(--ink-text);
+  padding: 12px 16px;
+  gap: 10px; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+  border-top: 3px solid #d81e2c;
+}
+body.editing .edit-bar { display: flex; }
+.edit-bar button {
+  border: 2px solid var(--ink-text);
+  background: transparent;
+  color: var(--ink-text);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.edit-bar span { font-size: 12.5px; opacity: .8; }
+
+.copy-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 80;
+  background: rgba(0,0,0,.7);
+  align-items: center; justify-content: center;
+  padding: 24px;
+}
+.copy-overlay.open { display: flex; }
+.copy-overlay textarea {
+  width: 100%; max-width: 800px; height: 70vh;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  padding: 14px;
+  border: 3px solid #0a0a0a;
+}
+.copy-overlay .copy-inner { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.copy-overlay button {
+  border: 3px solid #fff;
+  background: #d81e2c;
+  color: #fff;
+  font-weight: 700;
+  padding: 8px 16px;
+  cursor: pointer;
 }
 
 h1 {
@@ -63,7 +187,7 @@ h1 {
   font-weight: 400;
   font-size: 62px;
   margin: 0 0 30px;
-  color: #0a0a0a;
+  color: var(--text);
   text-shadow: 5px 5px 0 #d81e2c, 10px 10px 0 #1c3fd8;
 }
 
@@ -73,8 +197,8 @@ h2 {
   font-size: 20px;
   display: inline-block;
   margin: 50px 0 20px;
-  background: #0a0a0a;
-  color: #fff;
+  background: var(--ink);
+  color: var(--ink-text);
   padding: 8px 16px;
   transform: skew(-3deg);
 }
@@ -92,8 +216,8 @@ p { margin: 0 0 22px; }
 }
 .photo-frame img {
   display: block;
-  border: 10px solid #fff;
-  outline: 3px solid #0a0a0a;
+  border: 10px solid var(--bg);
+  outline: 3px solid var(--ink);
   box-shadow: 6px 6px 0 #d81e2c, 12px 12px 0 #1c3fd8;
 }
 .photo-frame .tape {
@@ -108,7 +232,7 @@ p { margin: 0 0 22px; }
   .photo-frame { margin: 22px auto 6px; }
 }
 
-.jump { list-style: none; margin: 0 0 40px; padding: 14px 18px; border: 3px solid #0a0a0a; display: flex; flex-wrap: wrap; justify-content: center; text-align: center; gap: 8px 20px; }
+.jump { list-style: none; margin: 0 0 40px; padding: 14px 18px; border: 3px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: center; text-align: center; gap: 8px 20px; }
 .jump li { font-size: 14px; }
 .jump li::before { content: "\2192\a0"; font-weight: 700; color: #d81e2c; }
 
@@ -121,10 +245,10 @@ section.flash { animation: flash-hit 1.2s ease-out; }
   section.flash { animation: none; }
 }
 
-.cal { list-style: none; margin: 0 0 24px; padding: 0; border: 3px solid #0a0a0a; }
-.cal li { display: flex; gap: 16px; padding: 12px 16px; border-bottom: 3px solid #0a0a0a; align-items: baseline; }
+.cal { list-style: none; margin: 0 0 24px; padding: 0; border: 3px solid var(--ink); }
+.cal li { display: flex; gap: 16px; padding: 12px 16px; border-bottom: 3px solid var(--ink); align-items: baseline; }
 .cal li:last-child { border-bottom: none; }
-.cal li:nth-child(odd) { background: #fafafa; }
+.cal li:nth-child(odd) { background: var(--panel); }
 .cal-date { font-family: "Archivo Black", sans-serif; font-size: 13px; color: #fff; background: #1c3fd8; padding: 3px 9px; white-space: nowrap; }
 .cal li:nth-child(even) .cal-date { background: #d81e2c; }
 .cal-what { font-size: 15px; }
@@ -140,18 +264,18 @@ section.flash { animation: flash-hit 1.2s ease-out; }
 .dots li:nth-child(even)::before { background: #1c3fd8; }
 
 .subdots { list-style: none; margin: 10px 0 0; padding: 0; }
-.subdots li { position: relative; padding-left: 22px; margin-bottom: 10px; font-size: 15px; color: #222; }
+.subdots li { position: relative; padding-left: 22px; margin-bottom: 10px; font-size: 15px; color: var(--text); }
 .subdots li::before {
   content: "";
   position: absolute; left: 0; top: 6px;
   width: 9px; height: 9px;
-  background: #0a0a0a;
+  background: var(--ink);
 }
 
 .btn {
   display: inline-block;
-  background: #0a0a0a;
-  color: #fff;
+  background: var(--ink);
+  color: var(--ink-text);
   font-weight: 700;
   text-decoration: none;
   padding: 10px 18px;
@@ -160,26 +284,23 @@ section.flash { animation: flash-hit 1.2s ease-out; }
 }
 .btn:hover { transform: translate(-2px, -2px); }
 
-.net-box { border: 3px solid #0a0a0a; background: #fafafa; padding: 8px 8px 0; margin: 18px 0; }
-#net-svg { width: 100%; height: auto; display: block; touch-action: none; }
-.net-edge { fill: none; stroke: #b7b7b7; stroke-width: 1.8; }
-.net-edge.active { stroke: #0a0a0a; stroke-width: 2.6; }
-.net-edge.dim { opacity: .15; }
-.net-edge.flow { stroke-dasharray: 5 6; animation: flowdash 1.1s linear infinite; }
-@keyframes flowdash { to { stroke-dashoffset: -22; } }
-.net-node { cursor: grab; }
-.net-node:active { cursor: grabbing; }
-.net-node text { font-size: 12px; font-weight: 700; fill: #0a0a0a; pointer-events: none; font-family: "Space Grotesk", sans-serif; }
-.net-node.dim circle { opacity: .25; }
-.net-node.dim text { opacity: .3; }
-.net-node.active circle { stroke-width: 3.5; }
-.net-node.method circle { fill: #dce6ff; stroke: #1c3fd8; }
-.net-node.branch-c circle { fill: #e6e6e6; stroke: #0a0a0a; }
-.net-node.branch-b circle { fill: #fbdbdd; stroke: #d81e2c; }
-.net-node.hub circle { fill: #d81e2c; stroke: #d81e2c; }
-.net-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 10px 4px 12px; font-size: 12px; color: #444; }
-.net-legend span { display: inline-flex; align-items: center; gap: 6px; }
-.net-legend i { width: 10px; height: 10px; display: inline-block; border-width: 2px; border-style: solid; }
+.post { border: 3px solid var(--ink); margin-bottom: 16px; background: var(--panel); }
+.post summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-weight: 700;
+}
+.post summary::-webkit-details-marker { display: none; }
+.post summary::after { content: "+"; font-family: "Archivo Black", sans-serif; font-size: 18px; }
+.post[open] summary::after { content: "\2212"; }
+.post-date { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.post-body { padding: 0 16px 18px; }
+.post-body p { margin: 14px 0 0; }
 
 .splash {
   position: fixed; inset: 0; z-index: 999;
@@ -220,7 +341,7 @@ section.flash { animation: flash-hit 1.2s ease-out; }
 .rail.left i:nth-child(1) { color: #d81e2c; animation: rail-up 3.2s linear infinite; }
 .rail.left i:nth-child(2) { color: #1c3fd8; animation: rail-down 4.1s linear infinite; }
 .rail.right i:nth-child(1) { color: #1c3fd8; animation: rail-down 2.6s linear infinite; }
-.rail.right i:nth-child(2) { color: #0a0a0a; animation: rail-up 3.8s linear infinite; }
+.rail.right i:nth-child(2) { color: var(--ink); animation: rail-up 3.8s linear infinite; }
 @keyframes rail-up { from { transform: translateY(0); } to { transform: translateY(-52px); } }
 @keyframes rail-down { from { transform: translateY(-52px); } to { transform: translateY(0); } }
 @media (max-width: 900px) { .rail { display: none; } }
@@ -234,6 +355,12 @@ section.flash { animation: flash-hit 1.2s ease-out; }
 <div class="rail left"><i></i><i></i></div>
 <div class="rail right"><i></i><i></i></div>
 
+<button class="theme-toggle" id="theme-toggle" aria-label="toggle light or dark mode">
+  <span class="icon-moon">&#9789;</span>
+  <span class="icon-sun">&#9728;</span>
+</button>
+<button class="edit-toggle" id="edit-toggle" aria-label="edit mode">&#128274;</button>
+
 <div class="wrap">
   <h1>love adu</h1>
 
@@ -241,26 +368,27 @@ section.flash { animation: flash-hit 1.2s ease-out; }
     <li><a href="#updates">updates</a></li>
     <li><a href="#written">work i've written</a></li>
     <li><a href="#interests">research interests</a></li>
-    <li><a href="#research">my research network</a></li>
+    <li><a href="#blog">my blog</a></li>
     <li><a href="#contact">say hi</a></li>
   </ul>
 
   <div class="row row-intro">
     <section>
       <h2 class="tight"><span>welcome!</span></h2>
-      <p class="intro-line">Hey! My name is <a href="mailto:loveadu@berkeley.edu">Love Adu (the one in blue)</a>.</p>
-      <p>I study platform governance, discourse, and the political economy of technology at <a href="#research">UC Berkeley</a>.</p>
+      <p>Hey! My name is <a href="mailto:loveadu@berkeley.edu">Love Adu</a>.</p>
+      <p>I study platform governance, discourse, and the political economy of technology at <a href="#interests">UC Berkeley</a>.</p>
       <p>I used to be a member of the Board of Governors for the California Community Colleges (appointed by Governor Newsom), and I've done research and policy work at Haas, the Oxford Computational Political Science Group, OutVote, IRLE @ Berkeley, the California Department of Technology, Issue One, the Roosevelt Network, Groundwork Collaborative, and a few other places.</p>
       <p>On the side I spend too much time dancing to early 2000s Beyonc&eacute; albums, thinking about the consequences of modern technology, and eating mango yogurt (shoutout Hui Lau Shan @ Berkeley).</p>
     </section>
 
     <section id="updates">
       <h2 class="tight"><span>updates</span></h2>
-      <ul class="cal">
-        <li><span class="cal-date">aug 6</span><span class="cal-what">presenting at the <strong>ASA CITMAS Media Sociology Symposium</strong></span></li>
-        <li><span class="cal-date">2026</span><span class="cal-what">attending <strong>ACM FAccT</strong></span></li>
-        <li><span class="cal-date">2027</span><span class="cal-what">attending <strong>CHI</strong></span></li>
+      <ul class="cal" id="cal-list">
+        <li><span class="cal-date">aug 6</span><span class="cal-what">presenting at the <strong>ASA CITMAS Media Sociology Symposium</strong></span><button class="del-btn" aria-label="delete">&times;</button></li>
+        <li><span class="cal-date">2026</span><span class="cal-what">attending <strong>ACM FAccT</strong></span><button class="del-btn" aria-label="delete">&times;</button></li>
+        <li><span class="cal-date">2027</span><span class="cal-what">attending <strong>CHI</strong></span><button class="del-btn" aria-label="delete">&times;</button></li>
       </ul>
+      <button class="btn edit-only" id="add-update">+ add update</button>
       <div class="photo-frame">
         <img src="loveheadshot.png" alt="pls pick a good photo lmao" width="220" height="260">
         <span class="tape tape-a"></span>
@@ -283,7 +411,7 @@ section.flash { animation: flash-hit 1.2s ease-out; }
 
     <section id="interests">
       <h2><span>research interests</span></h2>
-      <p>Two paths of thought I'm pursuing:</p>
+      <p>Two paths I keep circling back to:</p>
       <ul class="dots">
         <li>
           <strong>offline &rarr; online:</strong> how offline rhetoric from the tech industry has shaped culture, and through culture, socioeconomic and sociopolitical conditions, via law, policy, and media.
@@ -307,17 +435,12 @@ section.flash { animation: flash-hit 1.2s ease-out; }
     </section>
   </div>
 
-  <section id="research">
-    <h2><span>my research network</span></h2>
+  <section id="blog">
+    <h2><span>my blog</span></h2>
+    <p>whatever's on my mind, published here whenever I get around to it.</p>
+    <button class="btn edit-only" id="add-post">+ add post</button>
 
-    <div class="net-box">
-      <svg id="net-svg" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid meet"></svg>
-      <div class="net-legend">
-        <span><i style="background:#dce6ff; border-color:#1c3fd8;"></i>lenses (comp ling, culture, social theory, rhetoric)</span>
-        <span><i style="background:#e6e6e6; border-color:#0a0a0a;"></i>mechanisms (tech industry, law, media, policy)</span>
-        <span><i style="background:#fbdbdd; border-color:#d81e2c;"></i>effects (governance, institutional power, political economy of tech)</span>
-        <span><i style="background:#d81e2c; border-color:#d81e2c;"></i>consequences (socioeconomic conditions, inequality)</span>
-      </div>
+    <div id="blog-posts">
     </div>
   </section>
 
@@ -326,6 +449,20 @@ section.flash { animation: flash-hit 1.2s ease-out; }
     <p>Email: <a href="mailto:loveadu@berkeley.edu">loveadu@berkeley.edu</a><br>
     <a href="https://linkedin.com/in/love-adu-868458233/">LinkedIn</a></p>
   </section>
+</div>
+
+<div class="edit-bar" id="edit-bar">
+  <span>editing &mdash; saved to this browser only</span>
+  <button id="copy-html">copy page html</button>
+  <button id="reset-edits">reset to page defaults</button>
+  <button id="done-editing">done</button>
+</div>
+
+<div class="copy-overlay" id="copy-overlay">
+  <div class="copy-inner">
+    <textarea id="copy-area" readonly></textarea>
+    <button id="close-copy">close</button>
+  </div>
 </div>
 
 
@@ -354,206 +491,164 @@ if (splash) {
   })
 }
 
-var svgNS = "http://www.w3.org/2000/svg"
-
-var nodes = [
-  { id: "complx", x: 80, y: 60, r: 14, side: "right", type: "method", label: "Computational Linguistics",
-    desc: "Computational methods — NLP, corpus analysis — for studying discourse at scale." },
-  { id: "culture", x: 80, y: 170, r: 14, side: "right", type: "method", label: "Culture",
-    desc: "The shared symbols, norms, and practices that get reproduced and contested through discourse." },
-  { id: "social_theory", x: 80, y: 280, r: 14, side: "right", type: "method", label: "Social Theory",
-    desc: "Frameworks for reading discourse as a site of power — Fairclough, Wodak, Foucault, van Dijk." },
-  { id: "rhetoric", x: 80, y: 390, r: 14, side: "right", type: "method", label: "Rhetoric",
-    desc: "The study of persuasion and framing — how language does institutional work." },
-
-  { id: "techprac", x: 370, y: 60, r: 14, side: "right", type: "branch-c", label: "Tech Industry Practices",
-    desc: "The tech industry's own sociocultural and rhetorical practices — how it talks about itself." },
-  { id: "law", x: 370, y: 170, r: 14, side: "right", type: "branch-c", label: "Law",
-    desc: "Law as a mechanism through which discourse becomes binding institutional power." },
-  { id: "media", x: 370, y: 280, r: 14, side: "right", type: "branch-c", label: "Media",
-    desc: "Media as a mechanism through which discourse reaches and shapes publics." },
-  { id: "policy", x: 370, y: 390, r: 14, side: "right", type: "branch-c", label: "Policy",
-    desc: "Policy as a mechanism through which discourse becomes enforceable rules." },
-
-  { id: "governance", x: 640, y: 90, r: 18, side: "left", type: "branch-b", label: "Governance",
-    desc: "The resulting governance regimes — who gets to set the rules, and how." },
-  { id: "instpower", x: 640, y: 260, r: 18, side: "left", type: "branch-b", label: "Institutional Power",
-    desc: "Institutional power and marginalization — who those rules end up protecting, and who they don't." },
-  { id: "econtech", x: 640, y: 430, r: 18, side: "left", type: "branch-b", label: "Political Economy of Tech",
-    desc: "The economic incentives and ownership structures underneath the tech industry." },
-
-  { id: "socioecon", x: 850, y: 200, r: 14, side: "left", type: "hub", label: "Socioeconomic Conditions",
-    desc: "Contemporary socioeconomic conditions — shaped by, and reshaping, the tech industry." },
-  { id: "inequality", x: 850, y: 350, r: 14, side: "left", type: "hub", label: "Inequality",
-    desc: "The distributive stakes — who bears the cost of these economic arrangements." },
-]
-
-var edges = [
-  ["complx", "techprac"], ["complx", "law"], ["complx", "media"], ["complx", "policy"],
-  ["culture", "techprac"], ["culture", "law"], ["culture", "media"], ["culture", "policy"],
-  ["social_theory", "techprac"], ["social_theory", "law"], ["social_theory", "media"], ["social_theory", "policy"],
-  ["rhetoric", "techprac"], ["rhetoric", "law"], ["rhetoric", "media"], ["rhetoric", "policy"],
-  ["techprac", "governance"], ["techprac", "instpower"], ["techprac", "econtech"],
-  ["law", "governance"], ["law", "instpower"], ["law", "econtech"],
-  ["media", "governance"], ["media", "instpower"], ["media", "econtech"],
-  ["policy", "governance"], ["policy", "instpower"], ["policy", "econtech"],
-  ["governance", "socioecon"], ["governance", "inequality"],
-  ["instpower", "socioecon"], ["instpower", "inequality"],
-  ["econtech", "socioecon"], ["econtech", "inequality"],
-]
-
-var svg = document.getElementById("net-svg")
-
-if (svg) {
-
-  var byId = {}
-  for (var i = 0; i < nodes.length; i++) byId[nodes[i].id] = nodes[i]
-
-  var adj = {}
-  for (var i = 0; i < nodes.length; i++) adj[nodes[i].id] = []
-  for (var j = 0; j < edges.length; j++) {
-    adj[edges[j][0]].push(edges[j][1])
-    adj[edges[j][1]].push(edges[j][0])
-  }
-
-  function el(tag, attrs) {
-    var e = document.createElementNS(svgNS, tag)
-    for (var k in attrs) e.setAttribute(k, attrs[k])
-    return e
-  }
-
-  var defs = el("defs", {})
-  var arrow = el("marker", { id: "arrowhead", markerWidth: 8, markerHeight: 8, refX: 6, refY: 4, orient: "auto" })
-  arrow.appendChild(el("path", { d: "M0,0 L8,4 L0,8 z", fill: "#b7b7b7" }))
-  defs.appendChild(arrow)
-  svg.appendChild(defs)
-
-  var edgeLayer = el("g", {})
-  var nodeLayer = el("g", {})
-  svg.appendChild(edgeLayer)
-  svg.appendChild(nodeLayer)
-
-  function pathBetween(s, t) {
-    var dx = t.x - s.x, dy = t.y - s.y
-    var dist = Math.sqrt(dx * dx + dy * dy) || 1
-    var ux = dx / dist, uy = dy / dist
-    var sx = s.x + ux * (s.r + 2), sy = s.y + uy * (s.r + 2)
-    var tx = t.x - ux * (t.r + 10), ty = t.y - uy * (t.r + 10)
-    return "M" + sx.toFixed(1) + "," + sy.toFixed(1) + " L" + tx.toFixed(1) + "," + ty.toFixed(1)
-  }
-
-  var edgeEls = []
-  for (var i = 0; i < edges.length; i++) {
-    var e = edges[i]
-    var path = el('path', {
-      class: 'net-edge flow',
-      d: pathBetween(byId[e[0]], byId[e[1]]),
-      "marker-end": "url(#arrowhead)"
-    })
-    path.dataset.source = e[0]
-    path.dataset.target = e[1]
-    edgeLayer.appendChild(path)
-    edgeEls.push(path)
-  }
-
-  function moveEdges(id) {
-    for (var i = 0; i < edgeEls.length; i++) {
-      var p = edgeEls[i]
-      if (p.dataset.source === id || p.dataset.target === id) {
-        p.setAttribute("d", pathBetween(byId[p.dataset.source], byId[p.dataset.target]))
-      }
+var themeBtn = document.getElementById("theme-toggle")
+if (themeBtn) {
+  themeBtn.addEventListener("click", function () {
+    var root = document.documentElement
+    var isDark = root.getAttribute("data-theme") === "dark"
+    if (isDark) {
+      root.removeAttribute("data-theme")
+      localStorage.setItem("theme", "light")
+    } else {
+      root.setAttribute("data-theme", "dark")
+      localStorage.setItem("theme", "dark")
     }
-  }
-
-  var nodeEls = {}
-  var pinned = null
-
-  nodes.forEach(function (n) {
-    var g = el("g", { class: "net-node " + n.type, transform: "translate(" + n.x + "," + n.y + ")" })
-    var circle = el("circle", { r: n.r, "stroke-width": 2 })
-    var off = n.r + 8
-    var tx = n.side === "left" ? -off : off
-    var anchor = n.side === "left" ? "end" : "start"
-    var text = el("text", { x: tx, y: 4, "text-anchor": anchor })
-    text.textContent = n.label
-    g.appendChild(circle)
-    g.appendChild(text)
-    nodeLayer.appendChild(g)
-    nodeEls[n.id] = g
-
-    var moved = false
-    var startX = 0, startY = 0
-
-    function svgPt(clientX, clientY) {
-      var pt = svg.createSVGPoint()
-      pt.x = clientX
-      pt.y = clientY
-      var ctm = svg.getScreenCTM()
-      if (!ctm) return { x: n.x, y: n.y }
-      var loc = pt.matrixTransform(ctm.inverse())
-      return { x: loc.x, y: loc.y }
-    }
-
-    function onMove(ev) {
-      var p = svgPt(ev.clientX, ev.clientY)
-      if (Math.abs(p.x - startX) > 2 || Math.abs(p.y - startY) > 2) moved = true
-      n.x = p.x
-      n.y = p.y
-      g.setAttribute("transform", "translate(" + n.x + "," + n.y + ")")
-      moveEdges(n.id)
-    }
-    function onUp() {
-      document.removeEventListener("pointermove", onMove)
-      document.removeEventListener("pointerup", onUp)
-      if (!moved) select(n.id)
-    }
-
-    g.addEventListener("pointerdown", function (ev) {
-      moved = false
-      var p = svgPt(ev.clientX, ev.clientY)
-      startX = p.x
-      startY = p.y
-      document.addEventListener("pointermove", onMove)
-      document.addEventListener("pointerup", onUp)
-    })
-    g.addEventListener("mouseenter", function () { if (!pinned) highlight(n.id) })
-    g.addEventListener("mouseleave", function () { if (!pinned) reset() })
   })
+}
 
-  function highlight(id) {
-    var group = adj[id].concat([id])
-    nodes.forEach(function (n) {
-      var g = nodeEls[n.id]
-      g.classList.toggle("dim", group.indexOf(n.id) === -1)
-      g.classList.toggle("active", n.id === id)
-    })
-    edgeEls.forEach(function (p) {
-      var touches = p.dataset.source === id || p.dataset.target === id
-      p.classList.toggle("active", touches)
-      p.classList.toggle("dim", !touches)
+var lastScrollY = window.scrollY
+window.addEventListener("scroll", function () {
+  var y = window.scrollY
+  if (y > lastScrollY + 2) {
+    document.documentElement.style.setProperty("--scroll-color", "#d81e2c")
+  } else if (y < lastScrollY - 2) {
+    document.documentElement.style.setProperty("--scroll-color", "#1c3fd8")
+  }
+  lastScrollY = y
+}, { passive: true })
+
+// ---- edit mode: PIN-gated, saves to this browser only via localStorage ----
+// change this to your own code
+var EDIT_PIN = "2468"
+
+var calList = document.getElementById("cal-list")
+var blogPosts = document.getElementById("blog-posts")
+var editToggle = document.getElementById("edit-toggle")
+var editBar = document.getElementById("edit-bar")
+
+function wireDelButton(btn) {
+  btn.addEventListener("click", function () {
+    var row = btn.closest("li, .post")
+    if (row) row.remove()
+    saveEdits()
+  })
+}
+document.querySelectorAll(".del-btn").forEach(wireDelButton)
+
+function loadEdits() {
+  try {
+    var savedCal = localStorage.getItem("edited-cal")
+    if (savedCal && calList) calList.innerHTML = savedCal
+    var savedBlog = localStorage.getItem("edited-blog")
+    if (savedBlog && blogPosts) blogPosts.innerHTML = savedBlog
+  } catch (e) {}
+  document.querySelectorAll(".del-btn").forEach(wireDelButton)
+}
+loadEdits()
+
+function saveEdits() {
+  try {
+    if (calList) localStorage.setItem("edited-cal", calList.innerHTML)
+    if (blogPosts) localStorage.setItem("edited-blog", blogPosts.innerHTML)
+  } catch (e) {}
+}
+
+function setEditable(on) {
+  document.body.classList.toggle("editing", on)
+  if (calList) {
+    calList.querySelectorAll(".cal-date, .cal-what").forEach(function (f) {
+      f.contentEditable = on
     })
   }
-
-  function reset() {
-    nodes.forEach(function (n) { nodeEls[n.id].classList.remove("dim", "active") })
-    edgeEls.forEach(function (p) { p.classList.remove("dim", "active") })
+  if (blogPosts) {
+    blogPosts.querySelectorAll(".post-title, .post-date, .post-body p").forEach(function (f) {
+      f.contentEditable = on
+    })
   }
+}
 
-  function select(id) {
-    if (pinned === id) {
-      pinned = null
-      reset()
+if (editToggle) {
+  editToggle.addEventListener("click", function () {
+    if (document.body.classList.contains("editing")) {
+      setEditable(false)
+      saveEdits()
       return
     }
-    pinned = id
-    highlight(id)
-  }
-
-  svg.addEventListener("pointerdown", function (ev) {
-    if (ev.target === svg) {
-      pinned = null
-      reset()
+    var pin = prompt("enter pin to edit")
+    if (pin === null) return
+    if (pin === EDIT_PIN) {
+      setEditable(true)
+    } else {
+      alert("wrong pin")
     }
+  })
+}
+
+document.addEventListener("input", function () {
+  if (document.body.classList.contains("editing")) saveEdits()
+})
+
+var addUpdateBtn = document.getElementById("add-update")
+if (addUpdateBtn) {
+  addUpdateBtn.addEventListener("click", function () {
+    var li = document.createElement("li")
+    li.innerHTML = '<span class="cal-date" contenteditable="true">date</span><span class="cal-what" contenteditable="true">what happened</span><button class="del-btn" aria-label="delete">&times;</button>'
+    calList.appendChild(li)
+    wireDelButton(li.querySelector(".del-btn"))
+    li.querySelector(".cal-date").focus()
+    saveEdits()
+  })
+}
+
+var addPostBtn = document.getElementById("add-post")
+if (addPostBtn) {
+  addPostBtn.addEventListener("click", function () {
+    var div = document.createElement("div")
+    div.className = "post"
+    div.innerHTML = '<details open><summary><span class="post-title" contenteditable="true">new post title</span><span class="post-date" contenteditable="true">date</span></summary><div class="post-body"><p contenteditable="true">write your post here</p></div></details><button class="del-btn" aria-label="delete">&times;</button>'
+    blogPosts.insertBefore(div, blogPosts.firstChild)
+    wireDelButton(div.querySelector(".del-btn"))
+    div.querySelector(".post-title").focus()
+    saveEdits()
+  })
+}
+
+var doneBtn = document.getElementById("done-editing")
+if (doneBtn) {
+  doneBtn.addEventListener("click", function () {
+    setEditable(false)
+    saveEdits()
+  })
+}
+
+var resetBtn = document.getElementById("reset-edits")
+if (resetBtn) {
+  resetBtn.addEventListener("click", function () {
+    if (!confirm("This throws away anything saved in this browser and reloads the page's original content. Continue?")) return
+    try {
+      localStorage.removeItem("edited-cal")
+      localStorage.removeItem("edited-blog")
+    } catch (e) {}
+    location.reload()
+  })
+}
+
+var copyBtn = document.getElementById("copy-html")
+var copyOverlay = document.getElementById("copy-overlay")
+var copyArea = document.getElementById("copy-area")
+if (copyBtn && copyOverlay && copyArea) {
+  copyBtn.addEventListener("click", function () {
+    copyArea.value = "<!doctype html>\n" + document.documentElement.outerHTML
+    copyOverlay.classList.add("open")
+    copyArea.focus()
+    copyArea.select()
+    try { document.execCommand("copy") } catch (e) {}
+  })
+}
+var closeCopyBtn = document.getElementById("close-copy")
+if (closeCopyBtn && copyOverlay) {
+  closeCopyBtn.addEventListener("click", function () {
+    copyOverlay.classList.remove("open")
   })
 }
 </script>
