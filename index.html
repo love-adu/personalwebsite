@@ -211,6 +211,7 @@ var lastScrollY=window.scrollY
 window.addEventListener("scroll",function(){var y=window.scrollY
 if(y>lastScrollY+2){document.documentElement.style.setProperty("--scroll-color","#d81e2c")}else if(y<lastScrollY-2){document.documentElement.style.setProperty("--scroll-color","#1c3fd8")}
 lastScrollY=y},{passive:true})
+var SAVE_ENDPOINT="https://tiny-flower-8fa4.loveaduofficial.workers.dev/"
 var sitePassword=null
 var calList=document.getElementById("cal-list")
 var blogPosts=document.getElementById("blog-posts")
@@ -305,7 +306,7 @@ if(closeCopyBtn&&copyOverlay){closeCopyBtn.addEventListener("click",function(){c
 function saveToGithub(){if(!sitePassword){alert("log in first");return}
 if(editBarStatus)editBarStatus.textContent="saving\u2026"
 var html="<!doctype html>\n"+document.documentElement.outerHTML
-fetch("/api/save",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:sitePassword,html:html})}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.message||("save failed (status "+r.status+")"))
+fetch(SAVE_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:sitePassword,html:html})}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.message||("save failed (status "+r.status+")"))
 return j})}).then(function(){if(editBarStatus)editBarStatus.textContent="saved \u2014 live in a minute or two"
 alert("saved! your live site will update in a minute or two.")}).catch(function(err){if(editBarStatus)editBarStatus.textContent="logged in \u2014 editing"
 alert("couldn't save: "+err.message)})}
