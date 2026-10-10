@@ -39,6 +39,7 @@ body.mirror #msg{color:var(--ink)}
   <button id="bColor">color</button>
   <button id="bInv">invert</button>
   <button id="bStyle">style: flat</button>
+  <button id="bBg" style="display:none">set background</button>
   <input id="iChars" placeholder="your characters (sparse → dense)" autocomplete="off" spellcheck="false">
   <button id="bRec">&#9679; record</button>
   <button id="bSave">save png</button>
@@ -66,7 +67,8 @@ let mode = "ascii", invert = false, colorOn = true;
 let cell = 12, cols = 0, rows = 0, padTop = 0, padBot = 0;
 let lum = [], rgb = [], smLo = 0, smHi = 255;
 let style = "flat", fm = null, feat = null, view = null, faceLm = null, segMask = null, segTick = 0;
-const ml = { state: "idle", face: null, seg: null };
+const ml = { state: "idle", face: null, seg: null, err: "" };
+let bgRef = null, bgAcc = null, bgCapture = 0;
 const $ = id => document.getElementById(id);
 const chars = { ascii: CFG.asciiRamp, mirror: CFG.mirrorGlyphs };
 
@@ -93,7 +95,7 @@ function layout(){
   if (fm) fm.remove();
   fm = createGraphics(cols, rows);
   fm.pixelDensity(1);
-  feat = null;
+  feat = null; bgRef = null; bgCapture = 0;
   lum = new Array(cols * rows);
   rgb = new Array(cols * rows * 3);
 }
@@ -146,6 +148,14 @@ function draw(){
   const m = mode === "mirror";
   background(m ? "#f4f3ee" : 0);
   if (!started || !cam || !sample()) return;
+  if (bgCapture > 0 && bgAcc){
+    for (let j = 0; j < cols * rows * 3; j++) bgAcc[j] += rgb[j];
+    if (--bgCapture === 0){
+      bgRef = new Float32Array(bgAcc.length);
+      for (let j = 0; j < bgAcc.length; j++) bgRef[j] = bgAcc[j] / 6;
+      setStatus("background saved, step back in"); setTimeout(() => setStatus(""), 2500);
+    }
+  }
   m ? drawMirror() : drawAscii();
 }
 
@@ -173,11 +183,12 @@ function drawMirror(){
   const gl = Array.from(chars.mirror || CFG.mirrorGlyphs);
   textFont(CFG.cjkFont); textStyle(NORMAL); textSize(cell * 1.0);
   const flat = style === "flat";
-  if (flat){ track(); buildFeat(); }
+  track();
+  if (flat) buildFeat();
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
       const i = y * cols + x;
-      let d = flat ? flatDensity(i, x, y) : 1 - norm(i);       // photo = old look, flat = 3-tone
+      let d = flat ? flatDensity(i, x, y) : photoDensity(i, x, y);   // photo = shaded, flat = 3-tone
       if (invert) d = 1 - d;
       const ch = gl[Math.min(gl.length - 1, Math.floor(d * gl.length))];
       fill(flat ? (d > 0.95 ? 0 : lerp(205, 70, d)) : 17);
@@ -201,7 +212,24 @@ function flatDensity(i, x, y){
     if (c === 1) return 1;            // hair
     return c === 0 ? 0 : 0.4;         // background : skin / body / clothes
   }
-  return norm(i) < 0.42 ? 1 : 0;      // fallback: hard black/white threshold
+  if (bgRef){                          // fallback 1: you stepped out once, so anything new = you; dark parts of you = hair
+    const j = i * 3;
+    const dd = Math.abs(rgb[j] - bgRef[j]) + Math.abs(rgb[j+1] - bgRef[j+1]) + Math.abs(rgb[j+2] - bgRef[j+2]);
+    if (dd < 70) return 0;
+    return norm(i) < 0.4 ? 1 : 0.4;
+  }
+  return norm(i) < 0.42 ? 1 : 0;      // fallback 2: hard black/white threshold
+}
+
+/* photo style: shaded like before, but hair is always black and the background never gets as dark as hair */
+function photoDensity(i, x, y){
+  let d = 1 - norm(i);
+  if (segMask){
+    const c = segAt(x, y);
+    if (c === 1) return 1;
+    if (c === 0) d = Math.min(d, 0.4);
+  }
+  return d;
 }
 
 function segAt(x, y){
@@ -257,21 +285,23 @@ async function ensureML(){
       try {
         ml.face = await mod.FaceLandmarker.createFromOptions(vision, {
           baseOptions: { modelAssetPath: MODELS.face, delegate }, runningMode: "VIDEO", numFaces: 1 });
-      } catch (e) { ml.face = null; }
+      } catch (e) { ml.face = null; ml.err = "face: " + ((e && e.message) || e); }
       try {
         ml.seg = await mod.ImageSegmenter.createFromOptions(vision, {
           baseOptions: { modelAssetPath: MODELS.seg, delegate }, runningMode: "VIDEO",
           outputCategoryMask: true, outputConfidenceMasks: false });
-      } catch (e) { ml.seg = null; }
+      } catch (e) { ml.seg = null; ml.err += " hair: " + ((e && e.message) || e); }
     };
     await build("GPU");
     if (!ml.face && !ml.seg) await build("CPU");
     if (!ml.face && !ml.seg) throw new Error("no models");
-    ml.state = "ready"; setStatus("");
+    ml.state = "ready";
+    setStatus("tracking: face " + (ml.face ? "\u2713" : "\u2717") + "  hair " + (ml.seg ? "\u2713" : "\u2717"));
+    setTimeout(() => setStatus(""), 3000);
   } catch (e) {
     ml.state = "failed";
-    setStatus("face tracking unavailable, using black/white contrast instead");
-    setTimeout(() => setStatus(""), 4000);
+    setStatus("tracking unavailable (" + String((e && e.message) || e).slice(0, 80) + "). tap 'set background' for hair instead");
+    setTimeout(() => setStatus(""), 7000);
   }
 }
 function track(){
@@ -310,7 +340,17 @@ function wireUI(){
     $("bMode").textContent = "mode: " + mode;
     $("iChars").value = chars[mode];
     layout();
-    if (mode === "mirror" && started) ensureML();
+    $("bBg").style.display = mode === "mirror" ? "" : "none";
+    if (mode === "mirror" && started){ if (ml.state === "failed") ml.state = "idle"; ensureML(); }
+  };
+  $("bBg").onclick = () => {
+    if (!started) return;
+    let n = 3; setStatus("step out of the frame… " + n);
+    const t = setInterval(() => {
+      n--;
+      if (n > 0) setStatus("step out of the frame… " + n);
+      else { clearInterval(t); setStatus("capturing…"); bgAcc = new Float32Array(cols * rows * 3); bgCapture = 6; }
+    }, 1000);
   };
   $("bStyle").onclick = () => { style = style === "flat" ? "photo" : "flat"; $("bStyle").textContent = "style: " + style; };
   $("bColor").onclick = () => { colorOn = !colorOn; $("bColor").textContent = colorOn ? "color" : "mono"; };
