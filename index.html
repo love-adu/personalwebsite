@@ -99,39 +99,109 @@ h2{font-size:17px;padding:7px 12px}
 
   <div class="row">
     <section id="written">
+      <style>
+.pubs-wrap{position:relative;--sc:#d81e2c;margin:0 0 24px}
+.pubs-wrap.up{--sc:#1c3fd8}
+[data-theme="dark"] .pubs-wrap.up{--sc:#6f86ff}
+.pubs{border:3px solid var(--ink);background:var(--bg);max-height:min(460px,68vh);overflow-y:auto;scrollbar-width:auto;scrollbar-color:var(--sc) var(--bg)}
+.pubs::-webkit-scrollbar{width:14px}
+.pubs::-webkit-scrollbar-track{background:var(--bg)}
+.pubs::-webkit-scrollbar-thumb{background-color:var(--sc);border:3px solid var(--bg);background-clip:padding-box}
+.pubs-bar{display:none;position:absolute;right:6px;top:7px;bottom:7px;width:6px;pointer-events:none}
+.pubs-bar i{display:block;width:6px;border-radius:3px;background:var(--sc);transition:background-color .25s ease}
+@media (pointer:coarse){.pubs{scrollbar-width:none}.pubs::-webkit-scrollbar{display:none}.pubs-bar{display:block}}
+.pgrp-h{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:10px 14px;border-bottom:3px solid var(--ink)}
+.pgrp+.pgrp .pgrp-h{border-top:3px solid var(--ink)}
+.pgrp-t{background:var(--ink);color:var(--ink-text);font-family:"Archivo Black",sans-serif;font-weight:400;font-size:14px;padding:3px 12px;transform:skew(-3deg)}
+.pub{position:relative;padding:12px 28px 8px 38px}
+.pub:nth-child(odd){background:rgba(10,10,10,.07)}
+[data-theme="dark"] .pub:nth-child(odd){background:rgba(255,255,255,.08)}
+.pub::before{content:"";position:absolute;left:14px;top:17px;width:12px;height:12px;background:#d81e2c}
+.pub:nth-child(even)::before{background:#1c3fd8}
+.pub-t{font-weight:700;font-size:15px;line-height:1.45}
+.pub-m{font-style:italic;font-size:13px;color:var(--muted);margin:2px 0 4px}
+.pub .pub-s{font-size:14px;line-height:1.55;margin:0 0 8px}
+.pub .pub-s:empty{display:none}
+body.editing .pub .pub-s:empty{display:block}
+body.editing .pub .pub-s:empty::before{content:"add a summary";color:var(--muted);font-style:italic}
+.pub-l{margin:0 0 4px;font-size:14px}
+.pub-l:empty{display:none}
+.pub-a-w{display:inline-block;margin:0 12px 6px 0}
+.pub-b,.pgrp-f{display:flex;flex-wrap:wrap;gap:8px}
+.pgrp-f{padding:6px 14px 12px}
+.pub-b{padding-bottom:6px}
+.pubs>.pub-addgrp{margin:8px 14px 14px}
+.pub-btn{border:2px solid var(--ink);background:var(--bg);color:var(--text);font:inherit;font-size:13px;font-weight:700;padding:3px 10px;cursor:pointer}
+.pub-lx{padding:0 7px;margin-left:4px}
+body.editing .pub-btn{display:inline-block}
+</style>
       <h2><span>work i've written</span></h2>
       <p><a class="btn" href="Love_Adu_CV.pdf" download="">full cv (pdf)</a></p>
-      <ul class="dots">
-        <li><strong>“The Wall Against Competition: Big Tech's Exceptionalist Positioning and the Regulatory Immunity of Section 230”</strong>: how dominant tech firms use Silicon Valley exceptionalism to build a policy wall against regulatory accountability. <em>Roosevelt Network</em>, pending 2027.</li>
-        <li><strong>“Guilty by Retweet: Engagement Metrics as Infrastructure for Moral Attribution”</strong>: on how likes and retweets function as symbolic currency for collective boundary-work. <em>ASA CITMAS Media Sociology Symposium</em>.</li>
-        <li><strong>“The Artifice of Algorithmic Autonomy”</strong>: a computational text analysis of ~957,000 articles on how anthropomorphizing AI diffuses institutional responsibility. <em>UC Berkeley CITRIS Tech Policy Symposium</em>, 2026.</li>
-        <li><strong>“Algorithmic Curation and Its Effects on LGBTQ Youth Civic Engagement”</strong>: on how social platforms shape queer voter outreach and political discourse. <em>OutVote HQ</em>.</li>
-      </ul>
+      <div class="pubs-wrap">
+        <div class="pubs" tabindex="0" aria-label="publications, scrollable">
+          <div class="pgrp"><div class="pgrp-h"><div class="pgrp-t">works in progress</div><button class="pub-btn pgrp-rm edit-only" contenteditable="false">remove category</button></div><div class="pgrp-list"><div class="pub"><div class="pub-t">“The Wall Against Competition: Big Tech's Exceptionalist Positioning and the Regulatory Immunity of Section 230”</div><div class="pub-m">Roosevelt Network, pending publication May 2027</div><p class="pub-s">How dominant tech firms use Silicon Valley exceptionalism to build a policy wall against regulatory accountability.</p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div><div class="pub"><div class="pub-t">“The Reckless Student? An Empirical Analysis of School Policing and the First Amendment”</div><div class="pub-m">Working paper with Dr. Terry Allen, USC Gould School of Law School Policing Empirical Research Lab, available upon request</div><p class="pub-s"></p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div><div class="pub"><div class="pub-t">“Hate-F*ck Politics: Sexualized Aggression and the Pornographic Rhetoric of Online Partisan Media”</div><div class="pub-m">Working paper, available upon request</div><p class="pub-s">A comparative discourse analysis showing how online partisan political rhetoric structurally mirrors the address style, domination lexicon, and climax-oriented narrative grammar of pornographic paratext.</p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div><div class="pub"><div class="pub-t">“Quick to Anger: Human Propensity for Irritability and Violence When Interacting with Chatbots”</div><div class="pub-m">Working paper, available upon request</div><p class="pub-s"></p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div></div><div class="pgrp-f"><button class="pub-btn pub-add edit-only" contenteditable="false">+ add entry</button></div></div>
+          <div class="pgrp"><div class="pgrp-h"><div class="pgrp-t">conferences, symposia &amp; posters</div><button class="pub-btn pgrp-rm edit-only" contenteditable="false">remove category</button></div><div class="pgrp-list"><div class="pub"><div class="pub-t">“Guilty by Retweet: Engagement Metrics as Infrastructure for Moral Attribution”</div><div class="pub-m">Presentation, ASA CITMAS Media Sociology Symposium</div><p class="pub-s">On how likes and retweets function as symbolic currency for collective boundary-work.</p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div><div class="pub"><div class="pub-t">“The Artifice of Algorithmic Autonomy”</div><div class="pub-m">Paper, UC Berkeley CITRIS Tech Policy Symposium, 2026</div><p class="pub-s">A computational text analysis of ~957,000 articles on how anthropomorphizing AI diffuses institutional responsibility.</p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div><div class="pub"><div class="pub-t">“A Rhetorical Analysis of Racial Bioessentialist Sports Media Coverage”</div><div class="pub-m">Poster, National Conference of Undergraduate Research</div><p class="pub-s"></p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div><div class="pub"><div class="pub-t">“Deception Divide: The Role of Political Disinformation in Marginalized Voter Outcomes”</div><div class="pub-m">Poster, HTCC @ UCR</div><p class="pub-s"></p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div></div><div class="pgrp-f"><button class="pub-btn pub-add edit-only" contenteditable="false">+ add entry</button></div></div>
+          <div class="pgrp"><div class="pgrp-h"><div class="pgrp-t">op-eds</div><button class="pub-btn pgrp-rm edit-only" contenteditable="false">remove category</button></div><div class="pgrp-list"><div class="pub"><div class="pub-t">“We are building the world's future leaders. And they're racist”</div><div class="pub-m">Op-ed, Daily Californian</div><p class="pub-s"></p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div><div class="pub"><div class="pub-t">“Voting Without a Ballot: How Research Carried Me to My First Election”</div><div class="pub-m">Op-ed, OutVote</div><p class="pub-s"></p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div></div><div class="pgrp-f"><button class="pub-btn pub-add edit-only" contenteditable="false">+ add entry</button></div></div>
+          <div class="pgrp"><div class="pgrp-h"><div class="pgrp-t">independent publications</div><button class="pub-btn pgrp-rm edit-only" contenteditable="false">remove category</button></div><div class="pgrp-list"><div class="pub"><div class="pub-t">“Algorithmic Curation and Its Effects on LGBTQ Youth Civic Engagement”</div><div class="pub-m">Research Fellow, OutVote HQ</div><p class="pub-s">On how social platforms shape queer voter outreach and political discourse.</p><div class="pub-l"></div><div class="pub-b"><button class="pub-btn pub-addlink edit-only" contenteditable="false">+ link</button><button class="pub-btn pub-rm edit-only" contenteditable="false">remove entry</button></div></div></div><div class="pgrp-f"><button class="pub-btn pub-add edit-only" contenteditable="false">+ add entry</button></div></div>
+          <button class="pub-btn pub-addgrp edit-only" contenteditable="false">+ add category</button>
+        </div>
+        <div class="pubs-bar"><i></i></div>
+      </div>
     </section>
 
     <section id="interests">
+      <style>
+.rp{border:3px solid;padding:14px;margin:0 0 18px}
+.rp.r{border-color:#d81e2c}.rp.b{border-color:#1c3fd8}
+[data-theme="dark"] .rp.b{border-color:#6f86ff}
+.rp-h b{display:block;font-family:"Archivo Black",sans-serif;font-weight:400;font-size:18px;margin-bottom:4px}
+.rp.r .rp-h b{color:#d81e2c}.rp.b .rp-h b{color:#1c3fd8}
+[data-theme="dark"] .rp.b .rp-h b{color:#6f86ff}
+.rp-h span{display:block;font-size:15px;line-height:1.55;margin-bottom:14px}
+.ri{border:3px solid var(--ink);background:var(--bg);margin:0 0 10px}
+.ri summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;font-weight:700;font-size:16px}
+.ri summary::-webkit-details-marker{display:none}
+.ri summary .ri-title{flex:1;min-width:0}
+.ri summary small{font-size:12px;font-weight:700;border:2px solid currentColor;padding:0 7px}
+.ri summary::after{content:"+";font-family:"Archivo Black",sans-serif;font-size:18px;line-height:1;width:16px;text-align:center}
+.ri[open] summary::after{content:"\2013"}
+.ri[open] summary{background:var(--ink);color:var(--ink-text)}
+.ri .rs{padding:12px 14px 6px;border-top:2px dotted var(--dot)}
+.ri summary+.rs{border-top:0}
+.ri .rs p{margin:0 0 10px;font-size:15px;line-height:1.55}
+.ri .chip,.ri .tag{display:inline-block;border:0;padding:2px 9px;margin:0 7px 8px 0;font-size:14px;line-height:1.4;color:var(--text)}
+.ri .tag{font-style:italic}
+.rp.r .chip,.rp.r .tag{background:#cfd8ff}
+.rp.b .chip,.rp.b .tag{background:#ffd0d0}
+[data-theme="dark"] .rp.r .chip,[data-theme="dark"] .rp.r .tag{background:#2c3d96;color:#fff}
+[data-theme="dark"] .rp.b .chip,[data-theme="dark"] .rp.b .tag{background:#8a2c2c;color:#fff}
+.ri .rs .chips-gap{display:block;height:4px}
+.ri .chip-x{border:0;background:none;color:inherit;font:inherit;font-weight:700;margin-left:6px;padding:0 2px;cursor:pointer;line-height:1}
+body.editing .ri .chip-x{display:inline-block}
+.ri select.tag-add{display:none;font:inherit;font-size:13px;border:2px solid var(--ink);background:var(--bg);color:var(--text);padding:2px 6px;margin:6px 7px 8px 0;max-width:100%}
+body.editing .ri select.tag-add{display:inline-block}
+.ri-btn{border:2px solid var(--ink);background:var(--bg);color:var(--text);font:inherit;font-size:13px;font-weight:700;padding:3px 10px;cursor:pointer}
+.ri .ri-del{border-color:currentColor;background:none;color:inherit;padding:0 8px;font-size:16px;line-height:1.3}
+.ri .rm-sub{margin:6px 7px 8px 0}
+.ri .add-sub{margin:0 14px 12px}
+.rp>.add-topic{margin:2px 0 0}
+body.editing .ri-btn{display:inline-block}
+.ri-title:focus{outline:none}
+</style>
       <h2><span>research interests</span></h2>
-      <p>Two paths I keep circling back to:</p>
-      <ul class="dots">
-        <li>
-          <strong>offline → online:</strong> how offline rhetoric from the tech industry has shaped culture, and through culture, socioeconomic and sociopolitical conditions, via law, policy, and media.
-          <ul class="subdots">
-            <li>The anthropomorphization of AI agents in tech advertising, media, and marketing.</li>
-            <li>Big Tech's exceptionalist, “not like other girls” contrarian positioning, and how it's helped keep Section 230 without reform.</li>
-          </ul>
-        </li>
-        <li>
-          <strong>online → offline:</strong> how online society and culture operate on their own terms, and how that in turn influences socioeconomic and sociopolitical formations and dynamics.
-          <ul class="subdots">
-            <li>The anthropomorphization of AI agents, and its implications for subliminal formations in users about expectations of dominated labor.</li>
-            <li>Cancel culture and online engagement metrics as moral economies, possibly an extension of not getting justice for racism, sexism, and immoral behavior broadly offline, so people go looking for it online instead, as a kind of vigilante justice.</li>
-            <li>With AI and bots in comment sections, and other people's comments shaping the moral read of a situation: how much of our morality is actually our own?</li>
-            <li>The rhetoric and formation of hate speech online, particularly in racist, queerphobic, and misogynistic registers.</li>
-            <li>Lolcows, memes, and the rhetoric of hate online.</li>
-            <li>Eugenics via “looksmaxing,” and its sociohistorical lineage.</li>
-          </ul>
-        </li>
-      </ul>
+      <p>General fields, specific topics, and methods I hope to study further</p>
+      <div class="rp r">
+        <div class="rp-h"><b>offline → online</b><span>how offline influences from the tech industry have shaped culture, and through culture, socioeconomic and sociopolitical conditions, via law, policy, and media.</span></div>
+        <details class="ri" open><summary><span class="ri-title">ai &amp; anthropomorphization</span><small>1</small><button class="ri-btn ri-del edit-only" contenteditable="false" aria-label="remove topic">&times;</button></summary><div class="rs"><p>The anthropomorphization of AI agents in tech advertising, media, and marketing.</p><span class="chip" contenteditable="false">critical discourse analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">computational text analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">cultural analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">social theory<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="tag" contenteditable="false">longitudinal<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><button class="ri-btn add-sub edit-only" contenteditable="false">+ add subtopic</button></details>
+        <details class="ri"><summary><span class="ri-title">platform governance &amp; law</span><small>1</small><button class="ri-btn ri-del edit-only" contenteditable="false" aria-label="remove topic">&times;</button></summary><div class="rs"><p>Big Tech's exceptionalist, “not like other girls” contrarian positioning, and how it's helped keep Section 230 without reform.</p><span class="chip" contenteditable="false">critical discourse analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">legal &amp; policy analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">cultural analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">sociological analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">social theory<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><button class="ri-btn add-sub edit-only" contenteditable="false">+ add subtopic</button></details>
+        <button class="ri-btn add-topic edit-only" contenteditable="false">+ add topic</button>
+      </div>
+      <div class="rp b">
+        <div class="rp-h"><b>online → offline</b><span>how online society and culture operate on their own terms, and how that in turn influences socioeconomic and sociopolitical formations and dynamics.</span></div>
+        <details class="ri" open><summary><span class="ri-title">ai &amp; anthropomorphization</span><small>1</small><button class="ri-btn ri-del edit-only" contenteditable="false" aria-label="remove topic">&times;</button></summary><div class="rs"><p>The anthropomorphization of AI agents, and its implications for subliminal formations in users about expectations of dominated labor.</p><span class="chip" contenteditable="false">human experiments<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">online experiments<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">sociological analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">social theory<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><button class="ri-btn add-sub edit-only" contenteditable="false">+ add subtopic</button></details>
+        <details class="ri"><summary><span class="ri-title">online society</span><small>5</small><button class="ri-btn ri-del edit-only" contenteditable="false" aria-label="remove topic">&times;</button></summary><div class="rs"><p>Cancel culture and online engagement metrics as moral economies, possibly an extension of not getting justice for racism, sexism, and immoral behavior broadly offline, so people go looking for it online instead, as a kind of vigilante justice.</p><span class="chip" contenteditable="false">other computational social science<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">correlational research<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">sociological analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">cultural analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">social theory<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="tag" contenteditable="false">longitudinal<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><div class="rs"><p>With AI and bots in comment sections, and other people's comments shaping the moral read of a situation: how much of our morality is actually our own?</p><span class="chip" contenteditable="false">online experiments<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">human experiments<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">computational text analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">social theory<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><div class="rs"><p>The rhetoric and formation of hate speech online, particularly in racist, queerphobic, and misogynistic registers.</p><span class="chip" contenteditable="false">critical discourse analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">computational text analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">cultural analytics<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">social theory<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="tag" contenteditable="false">longitudinal<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><div class="rs"><p>Lolcows, memes, and the formation and existence of hate online.</p><span class="chip" contenteditable="false">cultural analytics<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">cultural analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">critical discourse analysis<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="tag" contenteditable="false">longitudinal<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><div class="rs"><p>Eugenics via “looksmaxing,” and its sociohistorical lineage.</p><span class="chip" contenteditable="false">cultural analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">sociological analysis (qualitative)<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><span class="chip" contenteditable="false">social theory<button class="chip-x edit-only" contenteditable="false" aria-label="remove tag">&times;</button></span><select class="tag-add edit-only" contenteditable="false" aria-label="add a tag"><option value="">+ tag</option><option>critical discourse analysis</option><option>computational text analysis</option><option>online experiments</option><option>human experiments</option><option>correlational research</option><option>cultural analytics</option><option>other computational social science</option><option>legal &amp; policy analysis</option><option>cultural analysis (qualitative)</option><option>sociological analysis (qualitative)</option><option>social theory</option><option value="__long">longitudinal (tag)</option><option value="__custom">custom…</option></select><button class="ri-btn rm-sub edit-only" contenteditable="false">remove subtopic</button></div><button class="ri-btn add-sub edit-only" contenteditable="false">+ add subtopic</button></details>
+        <button class="ri-btn add-topic edit-only" contenteditable="false">+ add topic</button>
+      </div>
     </section>
   </div>
 
@@ -437,6 +507,245 @@ blogPosts.insertBefore(div,blogPosts.firstChild)
 wireDelButton(div.querySelector(".del-btn"))
 div.querySelector(".post-title").focus()
 saveEdits()})}
+document.addEventListener("click",function(e){var x=e.target.closest&&e.target.closest(".chip-x")
+if(!x||!isEditing())return
+var c=x.closest(".chip, .tag")
+if(c)c.remove()
+saveEdits()})
+document.addEventListener("change",function(e){var sel=e.target
+if(!sel.classList||!sel.classList.contains("tag-add")||!isEditing())return
+var v=sel.value
+sel.value=""
+if(!v)return
+var kind="chip",label=v
+if(v==="__long"){kind="tag";label="longitudinal"}
+if(v==="__custom"){label=prompt("name this tag");if(!label)return
+label=label.trim();if(!label)return}
+var rs=sel.closest(".rs")
+if(!rs)return
+var dup=false
+rs.querySelectorAll(".chip, .tag").forEach(function(c){if(c.firstChild&&c.firstChild.textContent.trim().toLowerCase()===label.toLowerCase())dup=true})
+if(dup)return
+var span=document.createElement("span")
+span.className=kind
+span.setAttribute("contenteditable","false")
+span.appendChild(document.createTextNode(label))
+var b=document.createElement("button")
+b.className="chip-x edit-only"
+b.setAttribute("contenteditable","false")
+b.setAttribute("aria-label","remove tag")
+b.innerHTML="&times;"
+span.appendChild(b)
+sel.parentNode.insertBefore(span,sel)
+saveEdits()})
+var RI_OPTS=["critical discourse analysis","computational text analysis","online experiments","human experiments","correlational research","cultural analytics","other computational social science","legal & policy analysis","cultural analysis (qualitative)","sociological analysis (qualitative)","social theory"]
+function riBtn(cls,text,html){var b=document.createElement("button")
+b.className="ri-btn "+cls+" edit-only"
+b.setAttribute("contenteditable","false")
+if(html)b.innerHTML=html
+else b.textContent=text
+return b}
+function riNewSub(){var d=document.createElement("div")
+d.className="rs"
+var p=document.createElement("p")
+p.textContent="new subtopic"
+d.appendChild(p)
+var sel=document.createElement("select")
+sel.className="tag-add edit-only"
+sel.setAttribute("contenteditable","false")
+sel.setAttribute("aria-label","add a tag")
+var o0=document.createElement("option")
+o0.value=""
+o0.textContent="+ tag"
+sel.appendChild(o0)
+RI_OPTS.forEach(function(t){var o=document.createElement("option");o.textContent=t;sel.appendChild(o)})
+var oL=document.createElement("option")
+oL.value="__long"
+oL.textContent="longitudinal (tag)"
+sel.appendChild(oL)
+var oC=document.createElement("option")
+oC.value="__custom"
+oC.textContent="custom\u2026"
+sel.appendChild(oC)
+d.appendChild(sel)
+d.appendChild(riBtn("rm-sub","remove subtopic"))
+return d}
+function riNewTopic(){var d=document.createElement("details")
+d.className="ri"
+d.open=true
+var s=document.createElement("summary")
+var t=document.createElement("span")
+t.className="ri-title"
+t.textContent="new topic"
+s.appendChild(t)
+var c=document.createElement("small")
+c.textContent="1"
+s.appendChild(c)
+s.appendChild(riBtn("ri-del","","&times;"))
+d.appendChild(s)
+d.appendChild(riNewSub())
+d.appendChild(riBtn("add-sub","+ add subtopic"))
+return d}
+function riCount(d){var c=d.querySelector("summary small")
+if(c)c.textContent=d.querySelectorAll(".rs").length}
+document.addEventListener("click",function(e){if(!isEditing())return
+var el=e.target.closest?e.target:null
+if(!el)return
+if(el.closest(".ri-title")){e.preventDefault();return}
+var t=el.closest(".add-topic, .add-sub, .ri-del, .rm-sub")
+if(!t)return
+e.preventDefault()
+if(t.classList.contains("add-topic")){var d=riNewTopic()
+t.parentNode.insertBefore(d,t)
+saveEdits()
+return}
+var det=t.closest("details.ri")
+if(!det)return
+if(t.classList.contains("add-sub")){det.insertBefore(riNewSub(),t)
+riCount(det)
+saveEdits()
+return}
+if(t.classList.contains("rm-sub")){var rs=t.closest(".rs")
+if(rs)rs.remove()
+riCount(det)
+saveEdits()
+return}
+if(t.classList.contains("ri-del")){if(!confirm("remove this topic and everything in it?"))return
+det.remove()
+saveEdits()}},true)
+function inRiTitle(){var sel=window.getSelection()
+if(!sel||sel.rangeCount===0)return false
+var n=sel.anchorNode
+var el=n&&(n.nodeType===1?n:n.parentElement)
+return !!(el&&el.closest&&el.closest(".ri-title"))}
+document.addEventListener("keydown",function(e){if(!isEditing()||!inRiTitle())return
+if(e.key===" "){e.preventDefault();document.execCommand("insertText",false," ")}
+else if(e.key==="Enter")e.preventDefault()},true)
+document.addEventListener("keyup",function(e){if(!isEditing()||!inRiTitle())return
+if(e.key===" "||e.key==="Enter")e.preventDefault()},true)
+function pubBtn(cls,text,html){var b=document.createElement("button")
+b.className="pub-btn "+cls+" edit-only"
+b.setAttribute("contenteditable","false")
+if(html)b.innerHTML=html
+else b.textContent=text
+return b}
+function pubNewEntry(){var d=document.createElement("div")
+d.className="pub"
+var t=document.createElement("div")
+t.className="pub-t"
+t.textContent="new entry title"
+d.appendChild(t)
+var m=document.createElement("div")
+m.className="pub-m"
+m.textContent="venue, year"
+d.appendChild(m)
+var p=document.createElement("p")
+p.className="pub-s"
+p.textContent="one-line summary"
+d.appendChild(p)
+var l=document.createElement("div")
+l.className="pub-l"
+d.appendChild(l)
+var b=document.createElement("div")
+b.className="pub-b"
+b.appendChild(pubBtn("pub-addlink","+ link"))
+b.appendChild(pubBtn("pub-rm","remove entry"))
+d.appendChild(b)
+return d}
+function pubNewGroup(){var g=document.createElement("div")
+g.className="pgrp"
+var h=document.createElement("div")
+h.className="pgrp-h"
+var t=document.createElement("div")
+t.className="pgrp-t"
+t.textContent="new category"
+h.appendChild(t)
+h.appendChild(pubBtn("pgrp-rm","remove category"))
+g.appendChild(h)
+var l=document.createElement("div")
+l.className="pgrp-list"
+l.appendChild(pubNewEntry())
+g.appendChild(l)
+var f=document.createElement("div")
+f.className="pgrp-f"
+f.appendChild(pubBtn("pub-add","+ add entry"))
+g.appendChild(f)
+return g}
+function pubBarUpdate(box){var w=box.parentNode
+var bar=w&&w.querySelector(".pubs-bar")
+if(!bar)return
+var i=bar.firstElementChild
+var h=box.clientHeight,sh=box.scrollHeight
+if(sh<=h+1){bar.style.display="none";return}
+bar.style.display=""
+var th=Math.max(28,Math.round((h-14)*h/sh))
+i.style.height=th+"px"
+i.style.transform="translateY("+Math.round(box.scrollTop/(sh-h)*(h-14-th))+"px)"}
+document.querySelectorAll(".pubs").forEach(function(box){var last=0
+box.addEventListener("scroll",function(){var w=box.parentNode
+var y=box.scrollTop
+if(y>last+1)w.classList.remove("up")
+else if(y<last-1)w.classList.add("up")
+last=y
+pubBarUpdate(box)},{passive:true})
+if(window.MutationObserver)new MutationObserver(function(){pubBarUpdate(box)}).observe(box,{childList:true,subtree:true,characterData:true})
+window.addEventListener("resize",function(){pubBarUpdate(box)})
+pubBarUpdate(box)})
+document.addEventListener("click",function(e){if(!isEditing())return
+var el=e.target.closest?e.target:null
+if(!el)return
+if(el.closest(".pub-a")){e.preventDefault();return}
+var t=el.closest(".pub-addlink, .pub-lx, .pub-rm, .pub-add, .pgrp-rm, .pub-addgrp")
+if(!t)return
+e.preventDefault()
+var entry=t.closest(".pub")
+if(t.classList.contains("pub-addlink")&&entry){var label=prompt("what should the link say? (for example: pdf, slides, code, journal page)","pdf")
+if(!label)return
+label=label.trim()
+if(!label)return
+var u=prompt("paste the link for \u201c"+label+"\u201d","")
+if(!u)return
+u=u.trim()
+if(!u)return
+if(!/^(https?:|mailto:|\/|#)/i.test(u))u="https://"+u
+var w=document.createElement("span")
+w.className="pub-a-w"
+w.setAttribute("contenteditable","false")
+var a=document.createElement("a")
+a.className="pub-a"
+a.setAttribute("href",u)
+a.setAttribute("target","_blank")
+a.setAttribute("rel","noopener")
+a.textContent=label
+w.appendChild(a)
+w.appendChild(pubBtn("pub-lx","","&times;"))
+entry.querySelector(".pub-l").appendChild(w)
+saveEdits()
+return}
+if(t.classList.contains("pub-lx")){var wrap=t.closest(".pub-a-w")
+if(wrap)wrap.remove()
+saveEdits()
+return}
+if(t.classList.contains("pub-rm")&&entry){if(!confirm("remove this entry?"))return
+entry.remove()
+saveEdits()
+return}
+var grp=t.closest(".pgrp")
+if(t.classList.contains("pub-add")&&grp){grp.querySelector(".pgrp-list").appendChild(pubNewEntry())
+saveEdits()
+return}
+if(t.classList.contains("pgrp-rm")&&grp){if(!confirm("remove this category and all its entries?"))return
+grp.remove()
+saveEdits()
+return}
+if(t.classList.contains("pub-addgrp")){t.parentNode.insertBefore(pubNewGroup(),t)
+saveEdits()}},true)
+document.addEventListener("keydown",function(e){if(!isEditing()||e.key!=="Enter")return
+var sel=window.getSelection()
+if(!sel||sel.rangeCount===0)return
+var n=sel.anchorNode
+var el=n&&(n.nodeType===1?n:n.parentElement)
+if(el&&el.closest&&(el.closest(".pub-t")||el.closest(".pgrp-t")||el.closest(".pub-m")))e.preventDefault()},true)
 var savedRange=null
 document.addEventListener("selectionchange",function(){var sel=window.getSelection()
 if(!sel||sel.rangeCount===0)return
