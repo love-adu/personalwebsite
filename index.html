@@ -307,43 +307,63 @@ themeCells.push(tcell)}}
 var themeBtn=document.getElementById("theme-toggle")
 var themeBusy=false
 var themeHeart=document.getElementById("theme-heart")
+function heartTransition(toDark,onMid,onDone){
+if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches){onMid();onDone();return}
+var WORD="love adu",bg=toDark?"#121314":"#fff",blue=toDark?"#4d6bff":"#1c3fd8"
+var N=1200,raw=[],cum=[0],i,k,j=0
+for(i=0;i<=4000;i++){var u=i/4000*Math.PI*2,sn=Math.sin(u);raw.push({x:16*sn*sn*sn,y:-(13*Math.cos(u)-5*Math.cos(2*u)-2*Math.cos(3*u)-Math.cos(4*u))});if(i)cum.push(cum[i-1]+Math.hypot(raw[i].x-raw[i-1].x,raw[i].y-raw[i-1].y))}
+var L=cum[cum.length-1],pts=[]
+for(k=0;k<N;k++){var target=k/N*L;while(cum[j+1]<target)j++;pts.push(raw[j])}
+var dpr=window.devicePixelRatio||1,cv=document.createElement("canvas")
+cv.style.cssText="position:fixed;left:0;top:0;width:100%;height:100%;z-index:9999;pointer-events:none"
+cv.width=innerWidth*dpr;cv.height=innerHeight*dpr
+document.body.appendChild(cv)
+var ctx=cv.getContext("2d");ctx.scale(dpr,dpr)
+ctx.font="700 100px 'Space Grotesk',sans-serif"
+var wordLen=ctx.measureText(WORD).width/100*1.35
+var WORDS=Math.max(6,Math.floor(L/wordLen)),RINGS=7,GAP=1.15,DEPTH=0.9
+var base=Math.min(innerWidth,innerHeight)/44,duration=4800,t0=performance.now(),mid=false
+function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+function frame(now){
+var t=Math.min((now-t0)/duration,1)
+ctx.clearRect(0,0,innerWidth,innerHeight)
+var cover=t<.2?t/.2:(t<.6?1:Math.max(0,1-(t-.6)/.3))
+ctx.globalAlpha=cover;ctx.fillStyle=bg;ctx.fillRect(0,0,innerWidth,innerHeight);ctx.globalAlpha=1
+var grow=t<.3?ease(t/.3):1,swell=t<.6?0:ease((t-.6)/.4)
+var scale=base*(.2+.8*grow)*(1+swell*45),ang=t*Math.PI*3,cosA=Math.cos(ang),sinA=Math.sin(ang)
+var alpha=1-Math.min(1,swell/.2),flow=((now-t0)/1000)*.18
+if(t>=.45&&!mid){mid=true;onMid()}
+var cx=innerWidth/2,cy=innerHeight/2,cam=90,items=[]
+for(var r=0;r<RINGS;r++){
+var m=r-(RINGS-1)/2,shrink=1-m*GAP/17,z0=m*DEPTH,col=(r%3===2)?blue:"#d81e2c"
+for(var w=0;w<WORDS;w++){
+var f=(((w/WORDS+flow+r*.07)%1)+1)%1,idx=Math.floor(f*N),p=pts[idx],q=pts[(idx+6)%N]
+var ax=p.x*shrink,xr=ax*cosA+z0*sinA,zr=-ax*sinA+z0*cosA,kk=cam/(cam+zr)
+var bx=q.x*shrink,xr2=bx*cosA+z0*sinA,zr2=-bx*sinA+z0*cosA,kk2=cam/(cam+zr2)
+var x1=cx+xr*scale*kk,y1=cy+p.y*shrink*scale*kk,x2=cx+xr2*scale*kk2,y2=cy+q.y*shrink*scale*kk2
+var rot=Math.atan2(y2-y1,x2-x1)
+if(rot>Math.PI/2||rot<-Math.PI/2)rot+=Math.PI
+items.push({x:x1,y:y1,k:kk,z:zr,rot:rot,c:col})}}
+items.sort(function(a,b){return b.z-a.z})
+ctx.textAlign="center";ctx.textBaseline="middle"
+for(var n=0;n<items.length;n++){var it=items[n]
+ctx.save()
+ctx.globalAlpha=alpha*Math.min(1,.3+it.k*.55)
+ctx.fillStyle=it.c
+ctx.font="700 "+Math.max(3,scale*it.k)+"px 'Space Grotesk',sans-serif"
+ctx.translate(it.x,it.y);ctx.rotate(it.rot)
+ctx.fillText(WORD,0,0)
+ctx.restore()}
+if(t<1)requestAnimationFrame(frame)
+else{cv.remove();onDone()}}
+requestAnimationFrame(frame)}
 if(themeBtn){themeBtn.addEventListener("click",function(){if(themeBusy)return
 themeBusy=true
 var root=document.documentElement
-var curIsDark=root.getAttribute("data-theme")==="dark"
-var coverColor=curIsDark?"#fff":"#0a0a0a"
-var heartEmoji=curIsDark?"\ud83d\udda4":"\ud83e\udd0d"
-themeCells.forEach(function(c){c.style.animation="none"
-c.style.transition="none"
-c.style.background=coverColor
-c.style.opacity="0"})
-void themePixels.offsetWidth
-themeCells.forEach(function(c){c.style.transition="opacity .2s ease"
-c.style.opacity="1"})
-setTimeout(function(){themeHeart.textContent=heartEmoji
-themeHeart.style.animation="none"
-void themeHeart.offsetWidth
-themeHeart.style.animation="hi-in .45s steps(5) forwards"},230)
-setTimeout(function(){var isDark=root.getAttribute("data-theme")==="dark"
-if(isDark){root.removeAttribute("data-theme")
-localStorage.setItem("theme","light")}else{root.setAttribute("data-theme","dark")
-localStorage.setItem("theme","dark")}
-themeHeart.style.animation="none"
-void themeHeart.offsetWidth
-themeHeart.style.animation="hi-out .35s ease forwards"
-themeCells.forEach(function(c,idx){var col=idx%GRID_COLS,row=Math.floor(idx/GRID_COLS)
-c.style.setProperty("--pc",pixelColor(curIsDark))
-c.style.transition="none"
-c.style.opacity="1"
-c.style.background=coverColor
-c.style.animation="none"
-void c.offsetWidth
-c.style.animationName="pix"
-c.style.animationDuration=".4s"
-c.style.animationTimingFunction="ease"
-c.style.animationFillMode="forwards"
-c.style.animationDelay=(gridDist(col,row)*0.3+Math.random()*0.08)+"s"})},680)
-setTimeout(function(){themeBusy=false},1500)})}
+var toDark=root.getAttribute("data-theme")!=="dark"
+heartTransition(toDark,function(){if(toDark){root.setAttribute("data-theme","dark")
+localStorage.setItem("theme","dark")}else{root.removeAttribute("data-theme")
+localStorage.setItem("theme","light")}},function(){themeBusy=false})})}
 var lastScrollY=window.scrollY
 window.addEventListener("scroll",function(){var y=window.scrollY
 if(y>lastScrollY+2){document.documentElement.style.setProperty("--scroll-color","#d81e2c")}else if(y<lastScrollY-2){document.documentElement.style.setProperty("--scroll-color","#1c3fd8")}
