@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>mirror</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0a;--paper:#f4f3ee;--red:#d81e2c;--blue:#1c3fd8}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:"Space Grotesk",Helvetica,Arial,sans-serif}
+body.mirror{background:var(--paper)}
+canvas{display:block;position:fixed;left:0;top:0}
+#back{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:12px;z-index:6;color:#fff;font-weight:700;text-decoration:none;font-size:14px;mix-blend-mode:difference}
+#msg{position:fixed;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff;font-size:18px;line-height:1.4;pointer-events:none}
+body.mirror #msg{color:var(--ink)}
+#ui{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px))}
+#ui button,#ui input{font:inherit;font-size:14px;font-weight:700;border:3px solid var(--ink);background:#fff;color:var(--ink);padding:7px 12px;border-radius:0}
+#ui button{cursor:pointer}
+#ui button.on{background:var(--red);color:#fff;border-color:var(--red)}
+#ui input{font-weight:500;width:min(52vw,220px)}
+#ui button.rec{background:var(--red);color:#fff;border-color:var(--red)}
+#clip{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.88);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
+#clip.open{display:flex}
+#clip video{max-width:100%;max-height:68vh;border:3px solid #fff;background:#000}
+#clip .row{display:flex;gap:10px}
+#clip button{font:inherit;font-size:15px;font-weight:700;border:3px solid #fff;background:var(--red);color:#fff;padding:9px 16px;border-radius:0;cursor:pointer}
+#clip button.ghost{background:transparent}
+</style>
+</head>
+<body>
+<a id="back" href="./">&larr; back</a>
+<div id="msg">tap <b>&nbsp;start camera&nbsp;</b> to begin<br><small style="opacity:.7">your video never leaves your device</small></div>
+<div id="ui">
+  <button id="bCam" class="on">start camera</button>
+  <button id="bMode">mode: ascii</button>
+  <button id="bColor">color</button>
+  <button id="bInv">invert</button>
+  <input id="iChars" placeholder="your characters (sparse → dense)" autocomplete="off" spellcheck="false">
+  <button id="bRec">&#9679; record</button>
+  <button id="bSave">save png</button>
+  <button id="bCopy">copy code</button>
+</div>
+
+<div id="clip">
+  <video id="clipVid" playsinline controls loop muted></video>
+  <div class="row"><button id="clipSave">save video</button><button id="clipClose" class="ghost">close</button></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script>
+/* ===== edit these ===== */
+const CFG = {
+  title:  "love adu",            // shown at the top in mirror mode
+  footer: "love at first sight", // shown at the bottom in mirror mode
+  mirrorGlyphs: "辺渡愛",          // 渡辺愛 (Watanabe Ai), sparse → dense; dark parts of you get the denser glyphs
+  asciiRamp: "",                 // "" = letters/symbols by brightness (like the video); or e.g. " .:-=+*#%@"
+  cjkFont: "'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP','Noto Serif CJK JP','MS Mincho',serif"
+};
+
+let cam = null, g = null, started = false;
+let mode = "ascii", invert = false, colorOn = true;
+let cell = 12, cols = 0, rows = 0, padTop = 0, padBot = 0;
+let lum = [], rgb = [], smLo = 0, smHi = 255;
+const $ = id => document.getElementById(id);
+const chars = { ascii: CFG.asciiRamp, mirror: CFG.mirrorGlyphs };
+
+function setup(){
+  pixelDensity(Math.min(2, window.devicePixelRatio || 1));
+  createCanvas(windowWidth, windowHeight);
+  frameRate(24);
+  textAlign(CENTER, CENTER);
+  layout();
+  wireUI();
+  $("iChars").value = chars[mode];
+}
+
+function layout(){
+  const m = mode === "mirror";
+  cell = constrain(Math.floor(Math.min(width, height) / (m ? 44 : 52)), 9, 18);
+  padTop = m ? cell * 4 : 0;
+  padBot = m ? cell * 7 : 0;
+  cols = Math.max(8, Math.floor(width / cell));
+  rows = Math.max(8, Math.floor((height - padTop - padBot) / cell));
+  if (g) g.remove();
+  g = createGraphics(cols, rows);
+  g.pixelDensity(1);
+  lum = new Array(cols * rows);
+  rgb = new Array(cols * rows * 3);
+}
+
+function windowResized(){ resizeCanvas(windowWidth, windowHeight); layout(); }
+
+function startCamera(){
+  if (cam) return;
+  const msg = $("msg");
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    msg.textContent = "this browser can't open a camera (try Safari or Chrome over https)";
+    return;
+  }
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
+    .then(stream => {
+      stream.getTracks().forEach(t => t.stop()); // permission granted; let p5 open its own stream
+      cam = createCapture({ video: { facingMode: "user" }, audio: false }, () => {
+        started = true; msg.style.display = "none"; $("bCam").classList.remove("on");
+        $("bCam").textContent = "flip camera";
+      });
+      cam.elt.setAttribute("playsinline", ""); cam.elt.muted = true; cam.hide();
+    })
+    .catch(() => { msg.innerHTML = "camera is blocked.<br><small>allow it in your browser's site settings, then reload</small>"; });
+}
+
+function sample(){
+  const vw = cam.elt.videoWidth, vh = cam.elt.videoHeight;
+  if (!vw || !vh) return false;
+  const s = Math.max(cols / vw, rows / vh), dw = vw * s, dh = vh * s;
+  g.clear();
+  g.push(); g.translate(cols, 0); g.scale(-1, 1);        // mirror like a real mirror
+  g.image(cam, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
+  g.pop();
+  g.loadPixels();
+  let lo = 255, hi = 0;
+  for (let i = 0; i < cols * rows; i++){
+    const r = g.pixels[i*4], gg = g.pixels[i*4+1], b = g.pixels[i*4+2];
+    const l = 0.299*r + 0.587*gg + 0.114*b;
+    lum[i] = l; rgb[i*3] = r; rgb[i*3+1] = gg; rgb[i*3+2] = b;
+    if (l < lo) lo = l; if (l > hi) hi = l;
+  }
+  smLo = lerp(smLo, lo, 0.1); smHi = lerp(smHi, hi, 0.1);   // auto-contrast so dim rooms still work
+  return true;
+}
+
+const norm = i => constrain((lum[i] - smLo) / Math.max(1, smHi - smLo), 0, 1);
+
+function draw(){
+  const m = mode === "mirror";
+  background(m ? "#f4f3ee" : 0);
+  if (!started || !cam || !sample()) return;
+  m ? drawMirror() : drawAscii();
+}
+
+function drawAscii(){
+  textFont("monospace"); textSize(cell * 1.05);
+  const ramp = Array.from(chars.ascii || "");
+  for (let y = 0; y < rows; y++){
+    for (let x = 0; x < cols; x++){
+      const i = y * cols + x;
+      let n = norm(i); if (invert) n = 1 - n;
+      if (n < 0.14) continue;                                  // dark = empty, so you glow out of the black
+      const ch = ramp.length ? ramp[Math.floor(n * (ramp.length - 1))]
+                             : String.fromCharCode(33 + Math.floor(n * 92));
+      if (colorOn){
+        const r = rgb[i*3], gg = rgb[i*3+1], b = rgb[i*3+2];
+        const k = 255 / Math.max(r, gg, b, 1), f = 0.4 + 0.6 * n;
+        fill(r * k * f, gg * k * f, b * k * f);
+      } else fill(255 * (0.35 + 0.65 * n));
+      text(ch, x * cell + cell / 2, y * cell + cell / 2);
+    }
+  }
+}
+
+function drawMirror(){
+  const gl = Array.from(chars.mirror || CFG.mirrorGlyphs);
+  fill("#111");
+  textFont(CFG.cjkFont); textStyle(NORMAL); textSize(cell * 1.0);
+  for (let y = 0; y < rows; y++){
+    for (let x = 0; x < cols; x++){
+      let d = 1 - norm(y * cols + x); if (invert) d = 1 - d;   // dark areas → denser glyph
+      const ch = gl[Math.min(gl.length - 1, Math.floor(d * gl.length))];
+      text(ch, x * cell + cell / 2, padTop + y * cell + cell / 2);
+    }
+  }
+  textAlign(LEFT, BASELINE);
+  textFont("Georgia, 'Times New Roman', serif"); textStyle(BOLD); textSize(cell * 2.1);
+  text(CFG.title, cell, padTop - cell * 0.8);
+  textStyle(NORMAL); textSize(cell * 0.9);
+  text(CFG.footer, cell, padTop + rows * cell + cell * 1.4);
+  textAlign(CENTER, CENTER);
+}
+
+function wireUI(){
+  $("bCam").onclick = () => {
+    if (!cam) return startCamera();
+    // flip front/back camera
+    cam.remove(); cam = null; started = false;
+    window._facing = window._facing === "environment" ? "user" : "environment";
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: window._facing } }).then(s => {
+      s.getTracks().forEach(t => t.stop());
+      cam = createCapture({ video: { facingMode: window._facing }, audio: false }, () => { started = true; });
+      cam.elt.setAttribute("playsinline", ""); cam.elt.muted = true; cam.hide();
+    }).catch(() => {});
+  };
+  $("bMode").onclick = () => {
+    chars[mode] = $("iChars").value;
+    mode = mode === "ascii" ? "mirror" : "ascii";
+    document.body.classList.toggle("mirror", mode === "mirror");
+    $("bMode").textContent = "mode: " + mode;
+    $("iChars").value = chars[mode];
+    layout();
+  };
+  $("bColor").onclick = () => { colorOn = !colorOn; $("bColor").textContent = colorOn ? "color" : "mono"; };
+  $("bInv").onclick = () => { invert = !invert; $("bInv").classList.toggle("on", invert); };
+  $("iChars").oninput = e => { chars[mode] = e.target.value; };
+  $("bSave").onclick = () => saveCanvas("love-adu-mirror", "png");
+  $("bRec").onclick = toggleRec;
+  $("bCopy").onclick = copyCode;
+  $("clipClose").onclick = closeClip;
+  $("clipSave").onclick = saveClip;
+}
+
+/* ===== record ===== */
+let rec = null, recChunks = [], recTimer = null, recStart = 0, clipBlob = null, clipUrl = null, clipExt = "webm";
+function pickMime(){
+  const c = ["video/mp4;codecs=avc1.42E01E","video/mp4","video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"];
+  return c.find(t => window.MediaRecorder && MediaRecorder.isTypeSupported(t)) || "";
+}
+function toggleRec(){
+  if (rec){ rec.stop(); return; }
+  if (!window.MediaRecorder || !drawingContext.canvas.captureStream){
+    alert("this browser can't record the canvas. try Chrome, or screen-record your phone instead."); return;
+  }
+  const stream = drawingContext.canvas.captureStream(24);
+  const mime = pickMime();
+  recChunks = [];
+  rec = new MediaRecorder(stream, mime ? { mimeType: mime, videoBitsPerSecond: 6000000 } : { videoBitsPerSecond: 6000000 });
+  rec.ondataavailable = e => { if (e.data && e.data.size) recChunks.push(e.data); };
+  rec.onstop = () => {
+    clearInterval(recTimer);
+    const type = (rec && rec.mimeType) || mime || "video/webm";
+    rec = null;
+    $("bRec").classList.remove("rec"); $("bRec").innerHTML = "&#9679; record";
+    showClip(new Blob(recChunks, { type }), type);
+  };
+  rec.start(250);
+  recStart = Date.now();
+  $("bRec").classList.add("rec");
+  recTimer = setInterval(() => {
+    const s = Math.floor((Date.now() - recStart) / 1000);
+    $("bRec").innerHTML = "&#9632; stop " + Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }, 250);
+  $("bRec").innerHTML = "&#9632; stop 0:00";
+}
+function showClip(blob, type){
+  if (clipUrl) URL.revokeObjectURL(clipUrl);
+  clipBlob = blob; clipExt = type.indexOf("mp4") > -1 ? "mp4" : "webm";
+  clipUrl = URL.createObjectURL(blob);
+  const v = $("clipVid"); v.src = clipUrl; v.play().catch(() => {});
+  $("clip").classList.add("open");
+}
+function closeClip(){ $("clip").classList.remove("open"); $("clipVid").pause(); }
+function saveClip(){
+  const name = "love-adu-mirror." + clipExt;
+  const file = new File([clipBlob], name, { type: clipBlob.type });
+  const download = () => { const a = document.createElement("a"); a.href = clipUrl; a.download = name; document.body.appendChild(a); a.click(); a.remove(); };
+  if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({ files: [file] }).catch(download);
+  else download();
+}
+
+/* ===== copy code ===== */
+async function copyCode(){
+  let src;
+  try { src = await (await fetch(location.href)).text(); }
+  catch (e) { src = "<!DOCTYPE html>\n" + document.documentElement.outerHTML; }
+  let ok = false;
+  try { await navigator.clipboard.writeText(src); ok = true; }
+  catch (e) {
+    const ta = document.createElement("textarea"); ta.value = src; document.body.appendChild(ta); ta.select();
+    try { ok = document.execCommand("copy"); } catch (_) {}
+    ta.remove();
+  }
+  const b = $("bCopy"); b.textContent = ok ? "copied \u2713" : "couldn't copy";
+  setTimeout(() => b.textContent = "copy code", 1800);
+}
+</script>
+</body>
+</html>
