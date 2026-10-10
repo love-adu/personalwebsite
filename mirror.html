@@ -19,6 +19,7 @@ body.mirror #msg{color:var(--ink)}
 #ui button{cursor:pointer}
 #ui button.on{background:var(--red);color:#fff;border-color:var(--red)}
 #ui input{font-weight:500;width:min(52vw,220px)}
+#status{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:0;right:0;text-align:center;z-index:6;font-size:13px;font-weight:700;pointer-events:none;color:#fff;mix-blend-mode:difference}
 #ui button.rec{background:var(--red);color:#fff;border-color:var(--red)}
 #clip{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.88);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
 #clip.open{display:flex}
@@ -30,12 +31,14 @@ body.mirror #msg{color:var(--ink)}
 </head>
 <body>
 <a id="back" href="./">&larr; back</a>
+<div id="status"></div>
 <div id="msg">tap <b>&nbsp;start camera&nbsp;</b> to begin<br><small style="opacity:.7">your video never leaves your device</small></div>
 <div id="ui">
   <button id="bCam" class="on">start camera</button>
   <button id="bMode">mode: ascii</button>
   <button id="bColor">color</button>
   <button id="bInv">invert</button>
+  <button id="bStyle">style: flat</button>
   <input id="iChars" placeholder="your characters (sparse → dense)" autocomplete="off" spellcheck="false">
   <button id="bRec">&#9679; record</button>
   <button id="bSave">save png</button>
@@ -62,6 +65,8 @@ let cam = null, g = null, started = false;
 let mode = "ascii", invert = false, colorOn = true;
 let cell = 12, cols = 0, rows = 0, padTop = 0, padBot = 0;
 let lum = [], rgb = [], smLo = 0, smHi = 255;
+let style = "flat", fm = null, feat = null, view = null, faceLm = null, segMask = null, segTick = 0;
+const ml = { state: "idle", face: null, seg: null };
 const $ = id => document.getElementById(id);
 const chars = { ascii: CFG.asciiRamp, mirror: CFG.mirrorGlyphs };
 
@@ -85,6 +90,10 @@ function layout(){
   if (g) g.remove();
   g = createGraphics(cols, rows);
   g.pixelDensity(1);
+  if (fm) fm.remove();
+  fm = createGraphics(cols, rows);
+  fm.pixelDensity(1);
+  feat = null;
   lum = new Array(cols * rows);
   rgb = new Array(cols * rows * 3);
 }
@@ -102,7 +111,7 @@ function startCamera(){
     .then(stream => {
       stream.getTracks().forEach(t => t.stop()); // permission granted; let p5 open its own stream
       cam = createCapture({ video: { facingMode: "user" }, audio: false }, () => {
-        started = true; msg.style.display = "none"; $("bCam").classList.remove("on");
+        started = true; if (mode === "mirror") ensureML(); msg.style.display = "none"; $("bCam").classList.remove("on");
         $("bCam").textContent = "flip camera";
       });
       cam.elt.setAttribute("playsinline", ""); cam.elt.muted = true; cam.hide();
@@ -114,6 +123,7 @@ function sample(){
   const vw = cam.elt.videoWidth, vh = cam.elt.videoHeight;
   if (!vw || !vh) return false;
   const s = Math.max(cols / vw, rows / vh), dw = vw * s, dh = vh * s;
+  view = { ox: (cols - dw) / 2, oy: (rows - dh) / 2, dw, dh };
   g.clear();
   g.push(); g.translate(cols, 0); g.scale(-1, 1);        // mirror like a real mirror
   g.image(cam, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
@@ -161,21 +171,124 @@ function drawAscii(){
 
 function drawMirror(){
   const gl = Array.from(chars.mirror || CFG.mirrorGlyphs);
-  fill("#111");
   textFont(CFG.cjkFont); textStyle(NORMAL); textSize(cell * 1.0);
+  const flat = style === "flat";
+  if (flat){ track(); buildFeat(); }
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
-      let d = 1 - norm(y * cols + x); if (invert) d = 1 - d;   // dark areas → denser glyph
+      const i = y * cols + x;
+      let d = flat ? flatDensity(i, x, y) : 1 - norm(i);       // photo = old look, flat = 3-tone
+      if (invert) d = 1 - d;
       const ch = gl[Math.min(gl.length - 1, Math.floor(d * gl.length))];
+      fill(flat ? (d > 0.95 ? 0 : lerp(205, 70, d)) : 17);
       text(ch, x * cell + cell / 2, padTop + y * cell + cell / 2);
     }
   }
+  fill(17);
   textAlign(LEFT, BASELINE);
   textFont("Georgia, 'Times New Roman', serif"); textStyle(BOLD); textSize(cell * 2.1);
   text(CFG.title, cell, padTop - cell * 0.8);
   textStyle(NORMAL); textSize(cell * 0.9);
   text(CFG.footer, cell, padTop + rows * cell + cell * 1.4);
   textAlign(CENTER, CENTER);
+}
+
+/* flat style: hair + eyes + brows + nose + lips = black (1), the rest of you = light grey, background = lightest */
+function flatDensity(i, x, y){
+  if (feat && feat[i]) return 1;
+  if (segMask){
+    const c = segAt(x, y);
+    if (c === 1) return 1;            // hair
+    return c === 0 ? 0 : 0.4;         // background : skin / body / clothes
+  }
+  return norm(i) < 0.42 ? 1 : 0;      // fallback: hard black/white threshold
+}
+
+function segAt(x, y){
+  if (!segMask || !view) return 0;
+  const u = ((cols - (x + 0.5)) - view.ox) / view.dw, v = ((y + 0.5) - view.oy) / view.dh;
+  if (u < 0 || u >= 1 || v < 0 || v >= 1) return 0;
+  return segMask.d[Math.floor(v * segMask.h) * segMask.w + Math.floor(u * segMask.w)];
+}
+
+const FACE = {
+  leftEye:  [263,249,390,373,374,380,381,382,362,398,384,385,386,387,388,466],
+  rightEye: [33,7,163,144,145,153,154,155,133,173,157,158,159,160,161,246],
+  leftBrow: [336,296,334,293,300,276,283,282,295,285],
+  rightBrow:[70,63,105,66,107,55,65,52,53,46],
+  lips:     [61,146,91,181,84,17,314,405,321,375,291,409,270,269,267,0,37,39,40,185],
+  noseBridge:[168,6,197,195,5,4],
+  noseBase: [129,98,2,327,358]
+};
+
+function buildFeat(){
+  if (!feat || feat.length !== cols * rows) feat = new Uint8Array(cols * rows);
+  feat.fill(0);
+  if (!faceLm || !view) return;
+  const P = k => { const l = faceLm[k]; return [cols - (view.ox + l.x * view.dw), view.oy + l.y * view.dh]; };
+  fm.clear();
+  fm.fill(255); fm.stroke(255); fm.strokeWeight(1);
+  [FACE.leftEye, FACE.rightEye, FACE.leftBrow, FACE.rightBrow, FACE.lips].forEach(idx => {
+    fm.beginShape(); idx.forEach(k => { const p = P(k); fm.vertex(p[0], p[1]); }); fm.endShape(CLOSE);
+  });
+  const a = P(129), b = P(358), nw = Math.hypot(a[0] - b[0], a[1] - b[1]);
+  fm.noFill(); fm.strokeWeight(Math.max(1.2, nw * 0.2));
+  [FACE.noseBridge, FACE.noseBase].forEach(idx => {
+    fm.beginShape(); idx.forEach(k => { const p = P(k); fm.vertex(p[0], p[1]); }); fm.endShape();
+  });
+  fm.loadPixels();
+  for (let i = 0; i < cols * rows; i++) feat[i] = fm.pixels[i * 4 + 3] > 60 ? 1 : 0;
+}
+
+/* ===== face + hair detection (MediaPipe, loaded only in mirror mode) ===== */
+const MP = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+const MODELS = {
+  face: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+  seg:  "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite"
+};
+function setStatus(t){ $("status").textContent = t; }
+async function ensureML(){
+  if (ml.state !== "idle") return;
+  ml.state = "loading"; setStatus("loading face + hair tracking…");
+  try {
+    let mod; try { mod = await import(MP); } catch (e) { mod = await import(MP + "/+esm"); }
+    const vision = await mod.FilesetResolver.forVisionTasks(MP + "/wasm");
+    const build = async delegate => {
+      try {
+        ml.face = await mod.FaceLandmarker.createFromOptions(vision, {
+          baseOptions: { modelAssetPath: MODELS.face, delegate }, runningMode: "VIDEO", numFaces: 1 });
+      } catch (e) { ml.face = null; }
+      try {
+        ml.seg = await mod.ImageSegmenter.createFromOptions(vision, {
+          baseOptions: { modelAssetPath: MODELS.seg, delegate }, runningMode: "VIDEO",
+          outputCategoryMask: true, outputConfidenceMasks: false });
+      } catch (e) { ml.seg = null; }
+    };
+    await build("GPU");
+    if (!ml.face && !ml.seg) await build("CPU");
+    if (!ml.face && !ml.seg) throw new Error("no models");
+    ml.state = "ready"; setStatus("");
+  } catch (e) {
+    ml.state = "failed";
+    setStatus("face tracking unavailable, using black/white contrast instead");
+    setTimeout(() => setStatus(""), 4000);
+  }
+}
+function track(){
+  if (ml.state !== "ready" || !cam || !cam.elt.videoWidth) return;
+  const el = cam.elt, now = performance.now();
+  if (ml.face){
+    try { const r = ml.face.detectForVideo(el, now); faceLm = (r.faceLandmarks && r.faceLandmarks[0]) || null; }
+    catch (e) { faceLm = null; }
+  }
+  if (ml.seg && (segTick++ % 2 === 0)){
+    try {
+      ml.seg.segmentForVideo(el, now, res => {
+        const m = res.categoryMask;
+        if (m) segMask = { w: m.width, h: m.height, d: new Uint8Array(m.getAsUint8Array()) };
+      });
+    } catch (e) {}
+  }
 }
 
 function wireUI(){
@@ -197,7 +310,9 @@ function wireUI(){
     $("bMode").textContent = "mode: " + mode;
     $("iChars").value = chars[mode];
     layout();
+    if (mode === "mirror" && started) ensureML();
   };
+  $("bStyle").onclick = () => { style = style === "flat" ? "photo" : "flat"; $("bStyle").textContent = "style: " + style; };
   $("bColor").onclick = () => { colorOn = !colorOn; $("bColor").textContent = colorOn ? "color" : "mono"; };
   $("bInv").onclick = () => { invert = !invert; $("bInv").classList.toggle("on", invert); };
   $("iChars").oninput = e => { chars[mode] = e.target.value; };
