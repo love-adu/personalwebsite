@@ -58,7 +58,7 @@ h2{font-size:17px;padding:7px 12px}
     <section>
       <h2 class="tight"><span>welcome!</span></h2>
       <p>Hey! My name is <a href="mailto:loveadu@berkeley.edu">Love Adu</a>.</p>
-      <p>I study <span class="scratch-word" id="scratch-word"><span class="sw-text" style="transition: clip-path 0.16s linear; clip-path: inset(0px 0px 0px 100%);">online discourse</span></span> at <a href="#interests">UC Berkeley</a>.</p>
+      <p>I study <span class="scratch-word" id="scratch-word"><span class="sw-text" style="transition: clip-path 0.16s linear; clip-path: inset(0px);">computational social sciences</span></span> at <a href="#interests">UC Berkeley</a>.</p>
       <p>I used to be a member of the Board of Governors for the California Community Colleges (appointed by Governor Newsom), and I've done research and policy work at Haas, the Oxford Computational Political Science Group, OutVote, IRLE @ Berkeley, the California Department of Technology, Issue One, the Roosevelt Network, Groundwork Collaborative, and a few other places.</p>
       <p>On the side I spend too much time dancing to early 2000s Beyoncé albums, thinking about the consequences of modern technology, and eating mango yogurt (shoutout Hui Lau Shan @ Berkeley).</p>
     </section>
@@ -87,7 +87,7 @@ h2{font-size:17px;padding:7px 12px}
           <div class="vgrp"><div class="vh">independent publications</div><div class="vlist"><div class="vi"><div class="vl"><div class="lk">“Algorithmic Curation and Its Effects on LGBTQ Youth Civic Engagement”</div><div class="vm">research fellow, outvote hq</div></div><div class="vs">on how social platforms shape queer voter outreach and political discourse.</div><div class="vb"><button class="v-btn v-link edit-only" contenteditable="false">edit link</button><button class="v-btn v-color edit-only" contenteditable="false">color</button><button class="v-btn v-rm edit-only" contenteditable="false">remove line</button></div></div></div><div class="vf"><button class="v-btn v-add edit-only" contenteditable="false">+ add line</button><button class="v-btn v-grm edit-only" contenteditable="false">remove list</button></div></div>
           <button class="v-btn v-addgrp edit-only" contenteditable="false">+ add list</button>
         </div>
-        <div class="pubs-bar"><i style="height: 91px; transform: translateY(299px);"></i></div>
+        <div class="pubs-bar"><i style="height: 87px; transform: translateY(272px);"></i></div>
       </div>
     </section>
 
@@ -206,7 +206,7 @@ body.editing .vsize{display:flex}
     </section>
   </div>
 
-  <section id="code" data-after="interests" data-nav="code + data" class="">
+  <section id="code" data-after="interests" data-nav="code + data" class="" style="max-width: 40%;">
       <h2><span>code + data</span></h2>
       <div class="vsize" contenteditable="false"><span>box size:</span><button class="v-btn v-size edit-only " data-sz="h-" contenteditable="false">shorter</button><button class="v-btn v-size edit-only " data-sz="h+" contenteditable="false">taller</button><button class="v-btn v-size edit-only wbtn" data-sz="w-" contenteditable="false">narrower</button><button class="v-btn v-size edit-only wbtn" data-sz="w+" contenteditable="false">wider</button><button class="v-btn v-size edit-only " data-sz="rs" contenteditable="false">reset</button></div>
       <div class="pubs-wrap">
@@ -215,7 +215,7 @@ body.editing .vsize{display:flex}
           <div class="vgrp"><div class="vh">data</div><div class="vlist"></div><div class="vf"><button class="v-btn v-add edit-only" contenteditable="false">+ add line</button><button class="v-btn v-grm edit-only" contenteditable="false">remove list</button></div></div>
           <button class="v-btn v-addgrp edit-only" contenteditable="false">+ add list</button>
         </div>
-        <div class="pubs-bar"><i></i></div>
+        <div class="pubs-bar" style="display: none;"><i></i></div>
       </div>
     </section>
 
@@ -779,6 +779,7 @@ if(pb||pi){e.preventDefault();pickPhoto((pb||pi).closest(".slot"));return}
 if(rb){e.preventDefault();var sl=rb.closest(".slot"),im=sl.querySelector("img.slotimg");im.removeAttribute("src");im.hidden=true;sl.classList.add("empty");return}
 if(gb){e.preventDefault();var a=document.getElementById("dil-gh");var u=prompt("github link for the palette",a.getAttribute("href"));if(u)a.setAttribute("href",u)}})
 })()</script>
+
 
 
 
