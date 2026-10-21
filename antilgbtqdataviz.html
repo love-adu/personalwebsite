@@ -648,9 +648,9 @@ function setEditing(on){
 }
 function syncEdit(){editBar.hidden=!(isEditing()&&pageShown());}
 
-/* the lock. the password is never in this file, only a salted hash of it. set it once with the first-run step below */
-const EDIT_SALT='';
-const EDIT_HASH='';
+
+const EDIT_SALT='497d44c314d701e947e4cee1e6d7fc2a';
+const EDIT_HASH='53502dc0de07fd36311c2909fcf406082459b542e00595ff94618716f4cf7faa';
 const EDIT_ITER=200000;
 async function derive(pw,saltHex){
   const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);
