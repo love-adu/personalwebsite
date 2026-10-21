@@ -31,21 +31,21 @@ so `{{Love Adu}}` becomes `yo mama`. if something isn't in braces, leave it alon
 - [1.4 buttons](#14-buttons)
 - [1.5 editable list](#15-editable-list)
 - [1.6 research interests](#16-research-interests)
-- [1.7 work you've written (scrolling)](#17-work-youve-written-scrolling)
-- [1.8 code + data boxes (resize and move)](#18-code--data-boxes-resize-and-move)
+- [1.7 work you've written](#17-work-youve-written)
+- [1.8 code + data boxes](#18-code--data-boxes)
 - [1.9 updates list](#19-updates-list)
 - [1.10 blog posts and photos](#110-blog-posts-and-photos)
-- [1.11 other stuff: head, menu, contact, cv button](#111-other-stuff-head-menu-contact-cv-button)
+- [1.11 head, menu, contact, cv button](#111-head-menu-contact-cv-button)
 - [1.12 paste section](#112-paste-section)
 
 **part 2: animations**
 - [2.1 love heart transition (light/dark switch)](#21-love-heart-transition-lightdark-switch)
 - [2.2 intro screen](#22-intro-screen)
 - [2.3 the pixel erase](#23-the-pixel-erase)
-- [2.4 the words that keep changing)](#24-the-words-that-keep-changing)
-- [2.5 boxes that open](#25-boxes-that-open)
+- [2.4 the erasing ani (the word that keeps changing)](#24-the-erasing-ani-the-word-that-keeps-changing))
+- [2.5 boxes](#25-boxes)
 - [2.6 menu jump flash](#26-menu-jump-flash)
-- [2.7 name click and the language cards](#27-name-click-and-the-language-cards)
+- [2.7 language cards](#27-language-cards)
 
 **part 3: aesthetics**
 - [3.1 colors, light and dark](#31-colors-light-and-dark)
@@ -61,7 +61,7 @@ so `{{Love Adu}}` becomes `yo mama`. if something isn't in braces, leave it alon
 
 # part 1: functional
 
-## 1.1 get it running
+## 1.1 get it set up
 
 1. fork this repo (or download it and make your own)
 2. in your repo go to settings, then pages, and deploy from the `main` branch, root folder
@@ -85,7 +85,7 @@ editing from the live page needs the save function in 1.3. without it you can st
 
 ---
 
-## 1.2 the editing process
+## 1.2 the editing
 *This is explaining the process of editing- to learn how to set it up, check (1.3)*
 
 1. tap the lock icon (top right)
@@ -718,7 +718,7 @@ copy the whole `<div class="vi">` block for more lines, or just tap **+ add line
 
 ---
 
-## 1.6 research interests (two lists)
+## 1.6 research interests
 
 if it matters to you, the first list gets red arrows (what you study), the second gets blue arrows (how you study it, aka methods).
 
@@ -894,7 +894,7 @@ width and height changes are saved while you edit
 
 ---
 
-## 1.9 updates list
+## 1.9 updates
 
 ### my code
 
@@ -1081,7 +1081,7 @@ to update your cv later, upload a new pdf with the same name to your repo and it
 
 ---
 
-## 1.12 paste section tool
+## 1.12 paste section
 
 1. log in and tap **paste section** in the bottom bar
 2. paste the html block (it starts with `<section id=...`)
@@ -1266,7 +1266,7 @@ keep (start delay + spread time + about 0.7) under the intro's leave time in 2.2
 
 ---
 
-## 2.4 the major erasing (the word that keeps changing)
+## 2.4 the erasing ani (the word that keeps changing)
 
 in my welcome text, "I study ___ at UC Berkeley", the blank is a word that gets wiped away and replaced by a new one every couple of seconds. it's called the scratch word.
 
@@ -1576,7 +1576,7 @@ for the six link colors, keep the light ones dark enough to read on white and th
 
 ---
 
-## 3.2 background dots
+## 3.2 background dots (paper look)
 
 this makes it look like paper. my fav part tbh
 
