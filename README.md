@@ -1,5 +1,7 @@
 # personal site template and guide
 
+starting an academic/personal website is a daunting task, so wanted to make this for anyone who liked mine!
+
 it's also separated by feature, so if you only want to take one part, feel free.
 
 the guide is split into three parts:
@@ -1829,3 +1831,7 @@ before you publish, go through and remove or swap everything that's about me:
 - **a font isn't showing**: make sure it's in the `<link>` line at the top (3.5) and spelled exactly like it is on fonts.google.com
 - **the intro never goes away**: the leave time in 2.2 is shorter than the pixel erase in 2.3. just make the leave time bigger
 - **you're so cool and sexy and goated for spending 2 friday nights doing this for me, I'm unbelievably grateful and depressed I can't thank you in person**: don't worry about it :)
+
+A little Bey for the road:
+  
+https://ar.inspiredpencil.com/pictures-2023/single-ladies-gif
