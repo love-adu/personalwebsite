@@ -355,8 +355,6 @@ ol.refs li{margin:8px 0}
       <p>Particularly relevant when studying a browser extension that allows more workers to see reputation, isn't it?</p>
     </div>
     <div class="box">
-      <h3>For example:</h3>
-      <p class="sm">Each slider is one letter from the formula. The scale compares two things: what cheating would cost the requester later (p &times; &delta; &times; y) and the wage they would save by cheating (w). Whichever side is heavier wins. The numbers are made up for the demo.</p>
       <div class="ctl2"><label for="mp">Workers who can see a requester's history (p)</label><div class="rw"><input id="mp" type="range" min="0" max="100" value="55"><output id="mpO"></output></div></div>
       <div class="ctl2"><label for="md">How much the requester cares about future jobs (&delta;)</label><div class="rw"><input id="md" type="range" min="10" max="99" value="90"><output id="mdO"></output></div></div>
       <div class="ctl2"><label for="my">What a finished job is worth to the requester (y)</label><div class="rw"><input id="my" type="range" min="20" max="200" value="100"><output id="myO"></output></div></div>
@@ -574,13 +572,13 @@ function model(){
  const lx=200-L*Math.cos(ang),ly=70+L*Math.sin(ang),rx=200+L*Math.cos(ang),ry=70-L*Math.sin(ang);
  const win=loss>=w;
  function pan(x,y0,top,amt,heavy){
-  return '<line x1="'+x+'" y1="'+y0+'" x2="'+(x-48)+'" y2="'+(y0+34)+'" style="stroke:var(--fg)"/><line x1="'+x+'" y1="'+y0+'" x2="'+(x+48)+'" y2="'+(y0+34)+'" style="stroke:var(--fg)"/>'+
-  '<rect x="'+(x-68)+'" y="'+(y0+34)+'" width="136" height="48" style="fill:var(--bg);stroke:'+(heavy?(win?'var(--good)':'var(--bad)'):'var(--fg)')+';stroke-width:'+(heavy?3:1)+'"/>'+
-  '<text x="'+x+'" y="'+(y0+53)+'" text-anchor="middle" style="fill:var(--fg);font-size:11px;font-family:Georgia,serif">'+top+'</text>'+
+  return '<line x1="'+x+'" y1="'+y0+'" x2="'+(x-50)+'" y2="'+(y0+34)+'" style="stroke:var(--fg)"/><line x1="'+x+'" y1="'+y0+'" x2="'+(x+50)+'" y2="'+(y0+34)+'" style="stroke:var(--fg)"/>'+
+  '<rect x="'+(x-78)+'" y="'+(y0+34)+'" width="156" height="48" style="fill:var(--bg);stroke:'+(heavy?(win?'var(--good)':'var(--bad)'):'var(--fg)')+';stroke-width:'+(heavy?3:1)+'"/>'+
+  '<text x="'+x+'" y="'+(y0+53)+'" text-anchor="middle" style="fill:var(--fg);font-size:10.5px;font-family:Georgia,serif">'+top+'</text>'+
   '<text x="'+x+'" y="'+(y0+72)+'" text-anchor="middle" style="fill:var(--fg);font-size:16px;font-weight:bold;font-family:Georgia,serif">'+amt+'</text>';
  }
- $('#mScale').innerHTML='<svg viewBox="0 0 400 190" width="100%" role="img" aria-label="Scale comparing what cheating costs later with the wage saved"><polygon points="200,70 182,150 218,150" style="fill:var(--none)"/><line x1="150" y1="150" x2="250" y2="150" style="stroke:var(--fg);stroke-width:3"/><line x1="'+lx+'" y1="'+ly+'" x2="'+rx+'" y2="'+ry+'" style="stroke:var(--fg);stroke-width:4"/>'+pan(lx,ly,'Lost later (p \u00d7 \u03b4 \u00d7 y)',$d(loss),loss>w)+pan(rx,ry,'Saved by cheating (w)',$d(w),w>loss)+'</svg>';
- $('#mVerdict').innerHTML=win?'<span class="gr">The requester pays.</span> '+p.toFixed(2)+' \u00d7 '+d.toFixed(2)+' \u00d7 '+$d(y)+' = '+$d(loss)+' in lost future work, which is more than the '+$d(w)+' wage they would save.':'<span class="rd">The requester cheats.</span> '+p.toFixed(2)+' \u00d7 '+d.toFixed(2)+' \u00d7 '+$d(y)+' = '+$d(loss)+' in lost future work, which is less than the '+$d(w)+' wage they would save.'}
+ $('#mScale').innerHTML='<svg viewBox="0 0 400 190" width="100%" role="img" aria-label="Scale comparing what cheating costs the requester later with the wage they keep by cheating"><polygon points="200,70 182,150 218,150" style="fill:var(--none)"/><line x1="150" y1="150" x2="250" y2="150" style="stroke:var(--fg);stroke-width:3"/><line x1="'+lx+'" y1="'+ly+'" x2="'+rx+'" y2="'+ry+'" style="stroke:var(--fg);stroke-width:4"/>'+pan(lx,ly,'Lost later by cheating',$d(loss),loss>w)+pan(rx,ry,'Wage kept by cheating',$d(w),w>loss)+'</svg>';
+ $('#mVerdict').innerHTML=win?'<span class="gr">The requester loses money/jobs if they cheat, so they pay.</span> '+p.toFixed(2)+' \u00d7 '+d.toFixed(2)+' \u00d7 '+$d(y)+' = '+$d(loss)+' in lost future work, which is more than the '+$d(w)+' they would keep.':'<span class="rd">The requester cheats the workers.</span> '+p.toFixed(2)+' \u00d7 '+d.toFixed(2)+' \u00d7 '+$d(y)+' = '+$d(loss)+' in lost future work, which is less than the '+$d(w)+' they would keep.'}
 [mp,md,my,mw].forEach(e=>e.oninput=model);model();
 
 $$('.coverimg').forEach(i=>i.src=IMG.cover);
