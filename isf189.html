@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Can reputation discipline the gig economy?</title>
@@ -137,8 +136,8 @@ body.editing .slide a{pointer-events:none}
   <span id="clock">0:00 / 12:00</span>
 </div>
 
-<div id="fb" hidden><div id="fbw"><h2>Epilepsy warning</h2><p>The next part flashes bright colors quickly for about 3 seconds.</p><p><button class="lnk p" id="fbGo">continue</button></p></div><div id="fbt">Thank you for sitting through this</div></div>
-<div id="codebox" hidden><div class="cb"><p>Copy blocked by the browser. Select all and copy it by hand.</p><textarea id="codeta" readonly></textarea><p><button class="lnk" id="codeClose">close</button></p></div></div>
+<div id="fb" hidden=""><div id="fbw"><h2>Epilepsy warning</h2><p>The next part flashes bright colors quickly for about 3 seconds.</p><p><button class="lnk p" id="fbGo">continue</button></p></div><div id="fbt">Thank you for sitting through this</div></div>
+<div id="codebox" hidden=""><div class="cb"><p>Copy blocked by the browser. Select all and copy it by hand.</p><textarea id="codeta" readonly=""></textarea><p><button class="lnk" id="codeClose">close</button></p></div></div>
 <main id="stage">
 <section class="slide" data-title="Title"><div class="wrap hero">
   <div>
@@ -156,18 +155,18 @@ body.editing .slide a{pointer-events:none}
   <h2>The problem: what if the employer just doesn't pay?</h2>
   <div class="two">
     <div>
-      <p>Amazon Mechanical Turk (MTurk) was a website where people and companies posted small online jobs, like typing out what is in a photo or sorting comments into categories. Workers did them for a few cents each. The person posting the job is called a requester, and a job is called a HIT. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 5]</a></p>
-      <p>The worker does the job first. Then the requester picks one of two options. They can approve it and pay, or reject it. If they reject it, the worker gets nothing, the requester keeps the work, and there is no way to appeal. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 6]</a></p>
-      <p>A rejection also lowers the worker's approval rating, which is the share of their past work that got accepted. Many jobs require a high approval rating, so a few rejections can lock a worker out of work. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 6]</a></p>
+      <p>Amazon Mechanical Turk (MTurk) was a website where people and companies posted small online jobs, like typing out what is in a photo or sorting comments into categories. Workers did them for a few cents each. The person posting the job is called a <b>requester</b>, and a job is called a <b>HIT</b>. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 5]</a></p>
+      <p>The worker does the job first. Then the requester picks one of two options. They can <b>approve</b> it and pay, or <b>reject</b> it. If they reject it, the worker gets nothing, the requester keeps the work, and there is no way to appeal. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 6]</a></p>
+      <p>A rejection also lowers the worker's <b>approval</b> <b>rating</b>, which is the share of their past work that got accepted. Many jobs require a high approval rating, so a few rejections can lock a worker out of work. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 6]</a></p>
     </div>
     <div>
       <div class="mt">
         <div class="logo"><b>amazon</b> mechanical turk</div>
         <div class="sr">Your HITs<span>1 submitted</span></div>
         <table class="st">
-          <tr><th>HIT</th><th>Requester</th><th>Submitted</th><th>Status</th><th>Reward</th></tr>
+          <tbody><tr><th>HIT</th><th>Requester</th><th>Submitted</th><th>Status</th><th>Reward</th></tr>
           <tr><td>Enter all alcoholic beverage items from a receipt</td><td>Rakesh Bhandari</td><td>Just now</td><td id="stS" class="pend">Pending</td><td id="stR">$0.20</td></tr>
-        </table>
+        </tbody></table>
         <div class="note" id="stN">The requester has up to 30 days to approve or reject your work.</div>
       </div>
       <p style="margin-top:10px"><button class="lnk gr" id="hitPay">requester approves</button> &nbsp; <button class="lnk rd" id="hitRej">requester rejects</button></p>
@@ -182,45 +181,45 @@ body.editing .slide a{pointer-events:none}
       <p>Because workers have no legal way to get paid, they have to rely on each other. Workers on MTurk share reviews of requesters online. The authors asked whether that kind of shared reputation actually works as a replacement for contracts and courts. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 4]</a></p>
       <p>They split this into two questions.</p>
       <ol>
-        <li>Do the reviews tell workers something true? Are requesters with good reviews really better to work for?</li>
-        <li>Do workers actually avoid requesters with bad reviews, and does a good reputation help a requester get work done faster?</li>
+        <li><b>Do the reviews tell workers something true? Are requesters with good reviews really better to work for?</b></li>
+        <li><b>Do workers actually avoid requesters with bad reviews, and does a good reputation help a requester get work done faster?</b></li>
       </ol>
     </div>
     <div class="dash">
-      <p>This matters beyond MTurk. Companies like Uber and Airbnb say their rating systems keep drivers, hosts and customers honest, so they don't need the kind of licensing and inspections that older businesses face. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 2]</a></p>
-      <p>If ratings really can discipline people when the law isn't enforcing anything, that argument gets stronger. If they can't, regulators have a reason to step in.</p>
+      <p><b>This matters beyond MTurk:</b> Companies like Uber and Airbnb argue their rating systems keep drivers, hosts and customers honest, so they don't need the kind of licensing and inspections that older businesses face. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 2]</a></p>
+      <p>If ratings really can discipline people when the law isn't enforcing anything, that argument has some backbone. If they can't, regulators have a reason to step in.&nbsp;</p>
     </div>
   </div>
 </div></section>
 
 <section class="slide" data-title="What earlier research left out"><div class="wrap">
-  <h2>What earlier research left out</h2>
+  <h2>Research gaps</h2>
   <div class="two">
     <div>
-      <p>Economists have argued for a long time that employers who break promises lose the trust of future workers, so a good reputation is worth protecting <a class="c" href="#cites" data-cite="8" title="See citations">[8, pp. 3, 7 of 1]</a><a class="c" href="#cites" data-cite="9" title="See citations">[9, p. 8 of 1]</a>. The same idea shows up in studies of sellers and firms in other markets <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 8]</a>.</p>
-      <p>Most research on jobs looks the other way, at how employers figure out which workers are good <a class="c" href="#cites" data-cite="7" title="See citations">[7, p. 9 of 1]</a>. How workers figure out which employers are good has gotten much less attention <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 2]</a>.</p>
-      <p>The few studies on employer reputation had weak spots. Some were lab games, which are not real jobs <a class="c" href="#cites" data-cite="2" title="See citations">[2, pp. 8-9 of 1]</a>. Others compared companies that already had good or bad reputations, like which firms get more job applicants <a class="c" href="#cites" data-cite="3" title="See citations">[3, p. 9 of 1]</a><a class="c" href="#cites" data-cite="4" title="See citations">[4, p. 9 of 1]</a>, but those companies also differ in many other ways <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 9]</a>.</p>
-      <p>What was missing was a test in a real job market where someone changed an employer's reputation on purpose and kept everything else the same. That is what this paper does <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 4]</a>.</p>
+      <p>Most economists have argued for a long time that employers who break promises lose the trust of future workers, so a good reputation is worth protecting <a class="c" href="#cites" data-cite="8" title="See citations">[8, pp. 3, 7 of 1]</a><a class="c" href="#cites" data-cite="9" title="See citations">[9, p. 8 of 1]</a>. The idea shows up in most studies of sellers and firms in other markets <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 8]</a>.</p>
+      <p>Most research on jobs looks the other direction: how employers figure out which workers are good <a class="c" href="#cites" data-cite="7" title="See citations">[7, p. 9 of 1]</a>. The question of how workers figure out which <b>employers</b> are good has gotten much less attention <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 2]</a>.</p>
+      <p>The few studies on employer reputation have many weak spots. Some were lab games, which are not real jobs <a class="c" href="#cites" data-cite="2" title="See citations">[2, pp. 8-9 of 1]</a>. Others compared companies that already had good or bad reputations, like which firms get more job applicants <a class="c" href="#cites" data-cite="3" title="See citations">[3, p. 9 of 1]</a><a class="c" href="#cites" data-cite="4" title="See citations">[4, p. 9 of 1]</a>, but those companies also differ in many other ways <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 9]</a>.</p>
+      <p>A gap to be filled was a test in a <b>real</b> job market where someone changed an employer's reputation on purpose (dependent variable) and kept everything else the same. That is what this paper seeks to do&nbsp;<a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 4]</a>.</p>
     </div>
     <div>
       <h3>Where the earlier studies fit</h3>
       <table class="g2">
-        <tr><th></th><th>Reputation was not changed on purpose</th><th>Reputation was changed on purpose</th></tr>
-        <tr><th>Lab game</th><td class="empty">-</td><td>Bartling, Fehr and Schmidt 2012 <a class="c" href="#cites" data-cite="2" title="See citations">[2, pp. 8-9 of 1]</a></td></tr>
+        <tbody><tr><th></th><th>Reputation was not changed on purpose (boo!)</th><th>Reputation was changed on purpose</th></tr>
+        <tr><th>Lab game (boo!)</th><td class="empty">-</td><td>Bartling, Fehr and Schmidt 2012 <a class="c" href="#cites" data-cite="2" title="See citations">[2, pp. 8-9 of 1]</a></td></tr>
         <tr><th>Real job market</th><td>Turban and Cable 2003 <a class="c" href="#cites" data-cite="3" title="See citations">[3, p. 9 of 1]</a><br>Brown and Matsa 2013 <a class="c" href="#cites" data-cite="4" title="See citations">[4, p. 9 of 1]</a><br>Chauvin and Guthrie 1994 <a class="c" href="#cites" data-cite="5" title="See citations">[5, p. 9 of 1]</a><br>Hannon and Milkovich 1995 <a class="c" href="#cites" data-cite="6" title="See citations">[6, p. 9 of 1]</a></td><td class="hl">This paper <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 4]</a></td></tr>
-      </table>
-      <p class="sm dim" style="margin-top:6px">My sorting of the studies the paper describes.</p>
+      </tbody></table>
+      <p class="sm dim" style="margin-top:6px"><br></p>
     </div>
   </div>
   <h3 style="margin-top:18px">The earlier studies in more detail</h3>
   <table>
-    <tr><th style="width:24%">Study</th><th>What it looked at</th><th style="width:30%">Why it fell short</th></tr>
-    <tr><td>Bartling, Fehr and Schmidt (2012) <a class="c" href="#cites" data-cite="2" title="See citations">[2, pp. 8-9 of 1]</a></td><td>In lab games, people playing employers held up workers less often when their past choices could be seen.</td><td>A lab game, not a real labor market.</td></tr>
-    <tr><td>Turban and Cable (2003) <a class="c" href="#cites" data-cite="3" title="See citations">[3, p. 9 of 1]</a></td><td>Whether companies with better reputations got more applicants, using career center data from two business schools.</td><td>It only shows a link. The companies differ in other ways too.</td></tr>
-    <tr><td>Brown and Matsa (2013) <a class="c" href="#cites" data-cite="4" title="See citations">[4, p. 9 of 1]</a></td><td>Whether financially distressed firms got fewer and lower quality applicants.</td><td>Also a comparison of firms, not a change in reputation.</td></tr>
-    <tr><td>Chauvin and Guthrie (1994) <a class="c" href="#cites" data-cite="5" title="See citations">[5, p. 9 of 1]</a>, Hannon and Milkovich (1995) <a class="c" href="#cites" data-cite="6" title="See citations">[6, p. 9 of 1]</a></td><td>Whether news of employer rankings moved stock prices.</td><td>Hard to measure well. The results were small or mixed, with small samples.</td></tr>
+    <tbody><tr><th style="width:24%">Study</th><th>What it looked at</th><th style="width:30%">Why it doesn't answer the Qs</th></tr>
+    <tr><td>Bartling, Fehr and Schmidt (2012) <a class="c" href="#cites" data-cite="2" title="See citations">[2, pp. 8-9 of 1]</a></td><td>In lab games, people playing employers held up workers less often when their past choices could be seen.</td><td>A lab game, not an actual labor market.</td></tr>
+    <tr><td>Turban and Cable (2003) <a class="c" href="#cites" data-cite="3" title="See citations">[3, p. 9 of 1]</a></td><td>Whether companies with better reputations got more applicants, using career center data from two business schools.</td><td>It only shows a link not causation, The companies differ in other ways too.</td></tr>
+    <tr><td>Brown and Matsa (2013) <a class="c" href="#cites" data-cite="4" title="See citations">[4, p. 9 of 1]</a></td><td>Whether financially distressed firms got fewer and lower quality applicants.</td><td>Also a comparison of firms, without a change in reputation, so not applicable.</td></tr>
+    <tr><td>Chauvin and Guthrie (1994) <a class="c" href="#cites" data-cite="5" title="See citations">[5, p. 9 of 1]</a>, Hannon and Milkovich (1995) <a class="c" href="#cites" data-cite="6" title="See citations">[6, p. 9 of 1]</a></td><td>Whether news of employer rankings moved stock prices.</td><td>Hard to measure well and the results were small or mixed, with small samples.</td></tr>
     <tr><td>Pallais (2015) <a class="c" href="#cites" data-cite="7" title="See citations">[7, p. 9 of 1]</a></td><td>How past work experience helps a worker get hired on an online labor market.</td><td>It looks at employers choosing workers, not the other way around.</td></tr>
-  </table>
+  </tbody></table>
 </div></section>
 
 <section class="slide" data-title="What workers could see"><div class="wrap">
@@ -229,11 +228,11 @@ body.editing .slide a{pointer-events:none}
     <div>
       <ul>
         <li>MTurk's job list showed the requester's name, the pay, how long you had and how many jobs were left. It did not say whether the requester usually pays, how long the job really takes, or how often they reject work. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 6]</a></li>
-        <li>So workers built Turkopticon, a free browser plugin. Workers who install it can rate requesters from 1 to 5. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 6-7]</a></li>
-        <li>The four ratings are communication, pay for the time a job takes, fairness in approving and rejecting, and how quickly they pay. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 7]</a></li>
+        <li>So workers built <b>Turkopticon</b>, a free browser plugin. Workers who install it can rate requesters from 1 to 5. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 6-7]</a></li>
+        <li>The four ratings are (1) communication, (2) pay for the time a job takes, (3) fairness in approving and rejecting, and&nbsp; (4) how quickly they pay. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 7]</a></li>
         <li>Scores under 2 show up red, 2 to 3 yellow and over 3 green. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 7]</a></li>
         <li>By late 2013 it had 105,909 reviews from 8,734 workers about 23,031 requesters. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 7]</a></li>
-        <li>MTurk is a good place to study this. On most jobs you can't tell whether an employer behaves well because of a contract, the law or their own choice. On MTurk there is no contract and no appeal, so everything a requester does is their own decision. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 3]</a></li>
+        <li>MTurk is a good place to study for this specific question. An argument that could be made for other studies limitations is that, for most jobs, you can't tell whether an employer behaves well because of a contract, the law or their own choice. On MTurk there is no contract and no appeal, so everything a requester does is their own decision. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 3]</a></li>
       </ul>
     </div>
     <div>
@@ -246,12 +245,12 @@ body.editing .slide a{pointer-events:none}
 <section class="slide" data-title="Research design"><div class="wrap">
   <h2>Research design: two experiments</h2>
   <table>
-    <tr><th style="width:12%"></th><th>Experiment 1: do the reviews tell the truth?</th><th>Experiment 2: does a good reputation help?</th></tr>
-    <tr><th>What it asks</th><td>The first experiment checks whether Turkopticon's ratings are accurate. It asks whether requesters with good ratings really pay more reliably and quickly than requesters with bad ratings.</td><td>The second experiment asks whether a good reputation helps a requester get work done faster, when the job and the pay are exactly the same.</td></tr>
-    <tr><th>How it works</th><td>Two research assistants worked together. One had the Turkopticon plugin and picked real jobs from requesters with good, bad or no ratings. The other did the jobs without the plugin, so that person could not see any ratings. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 10]</a></td><td>The authors made 36 new requester accounts. On Turkopticon, they gave 12 of them good reviews, 12 bad reviews and 12 none. Each account posted the same $0.20 job for one hour, following a random schedule over three days. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 12-13]</a></td></tr>
-    <tr><th>Data</th><td>The assistants completed 598 jobs. A program recorded every payment and rejection, usually to within a minute. The authors also collected Turkopticon ratings for 23,031 requesters to decide what counted as a good or bad rating. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 10]</a></td><td>The authors counted how many workers viewed, accepted and submitted the job each hour, which came to 1,641 submissions. They also posted a short survey asking 100 workers how they decide which jobs to take. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 17]</a></td></tr>
+    <tbody><tr><th style="width:12%"></th><th>Experiment 1: do the reviews tell the truth?</th><th>Experiment 2: does a good reputation help?</th></tr>
+    <tr><th>What it asks</th><td>The first experiment checks whether Turkopticon's ratings are accurate. It asks whether requesters with good ratings really pay more reliably and quickly than requesters with bad ratings.</td><td>The second experiment asks whether a good reputation helps a requester get work done faster, when the job and the pay are otherwise the same.</td></tr>
+    <tr><th>How it works</th><td>Two research assistants worked in tandem: one had the Turkopticon plugin and picked real jobs from requesters with good, bad or no ratings. The other did the jobs without the plugin, so that person could not see any ratings. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 10]</a></td><td>The authors made 36 new requester accounts. On Turkopticon, they gave 12 of them good reviews, 12 bad reviews and 12 none. Each account posted the same $0.20 job for one hour, following a random schedule over three days. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 12-13]</a></td></tr>
+    <tr><th>Data</th><td>The assistants completed 598 jobs. A program recorded the payments and rejections, to within a minute. The authors also collected Turkopticon ratings for 23,031 requesters to decide what counted as a good or bad rating (averaging out). <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 10]</a></td><td>The authors counted how many workers viewed, accepted and submitted the job each hour, which came to 1,641 submissions. They also posted a short survey asking 100 workers how they decide which jobs to take. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 17]</a></td></tr>
     <tr><th>Analysis</th><td>They compared the share of rejected jobs, the days until the requester decided, and the hourly wage across the three groups, using standard statistical tests. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 11]</a></td><td>They used regression models built for counts to compare how fast work arrived for each type of requester, while accounting for the time of day and the day of the week. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 14-15]</a></td></tr>
-  </table>
+  </tbody></table>
 </div></section>
 
 <section class="slide" data-title="Experiment 1 design"><div class="wrap">
@@ -259,15 +258,15 @@ body.editing .slide a{pointer-events:none}
   <div class="two">
     <div>
       <p>Anyone can post a Turkopticon review, and nobody checks them. So the authors first tested whether the reviews were true. If you do a job for a requester with good reviews, do you really get treated better? <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 10]</a></p>
-      <p>To find out, someone had to do many real jobs for requesters with good, bad and no reviews, and write down what happened. But if the person doing the job could see the reviews, they might work harder for the good requesters, and that could change whether the job gets approved. So two research assistants split the work, and only one of them could see the ratings. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 10-11]</a></p>
+      <p>To find out, someone would have had to do many real jobs for requesters with good, bad and no reviews, and write down what happened. But if the person doing the job could see the reviews, they might work harder for the good requesters, and that could change whether the job gets approved. So two research assistants split the work, and only one of them could see the ratings. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 10-11]</a></p>
       <p>Because assistant 2 never saw the ratings, any difference in what happened next had to come from the requester, not from how hard the worker tried. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 11]</a></p>
     </div>
     <div>
       <h3>How each job was handled</h3>
       <div class="flow">
-        <div class="fs"><b>1.</b> A random list says which type comes next: good, bad or no ratings.</div><div class="fa">&darr;</div>
-        <div class="fs"><b>2.</b> Assistant 1, who can see the ratings, finds a real job from that type of requester.</div><div class="fa">&darr;</div>
-        <div class="fs"><b>3.</b> Assistant 1 sends the job to assistant 2, who can't see any ratings.</div><div class="fa">&darr;</div>
+        <div class="fs"><b>1.</b> A random list says which type comes next: good, bad or no ratings.</div><div class="fa">↓</div>
+        <div class="fs"><b>2.</b> Assistant 1, who can see the ratings, finds a real job from that type of requester.</div><div class="fa">↓</div>
+        <div class="fs"><b>3.</b> Assistant 1 sends the job to assistant 2, who can't see any ratings.</div><div class="fa">↓</div>
         <div class="fs"><b>4.</b> Assistant 2 does the job as carefully as possible. A program records whether and when the requester pays.</div>
       </div>
     </div>
@@ -276,19 +275,19 @@ body.editing .slide a{pointer-events:none}
     <div>
       <h3>What counted as each type of requester</h3>
       <table>
-        <tr><th>Type</th><th>Rule</th><th>Share of rated requesters</th></tr>
+        <tbody><tr><th>Type</th><th>Rule</th><th>Share of rated requesters</th></tr>
         <tr><td class="gr">Good</td><td>Rated above 3 out of 5 on all four things</td><td>26.3%</td></tr>
         <tr><td class="rd">Bad</td><td>No rating above 3, and the pay rating below 2</td><td>21.6%</td></tr>
         <tr><td>None</td><td>No reviews at all</td><td>Not applicable</td></tr>
-      </table>
+      </tbody></table>
       <p class="sm dim" style="margin-top:6px">Based on 23,031 requesters with Turkopticon reviews. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 10]</a></p>
     </div>
     <div>
       <h3>What they measured for each job</h3>
       <ul>
-        <li>Whether the job was rejected.</li>
+        <li>Whether the job was accepted or rejected.</li>
         <li>How many days the requester took to decide.</li>
-        <li>The hourly wage, which is the pay divided by how long the job took. A rejected job counts as $0. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 11]</a></li>
+        <li>The hourly wage, which is the pay divided by how long the job took. **A rejected job counts as $0. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 11]</a></li>
       </ul>
     </div>
   </div>
@@ -306,12 +305,12 @@ body.editing .slide a{pointer-events:none}
     </div>
     <div>
       <ul>
-        <li>A worker who only took jobs from well-rated requesters would have made about $2.83 an hour. A worker who only took jobs from badly rated or unrated requesters would have made just under $2.00. That is about 40% more. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></li>
-        <li>About one fifth of that gap came from getting rejected and not paid. The other four fifths came from jobs taking longer than expected. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></li>
-        <li>Good and bad requesters advertised about the same pay. A bad requester looks the same as a good one until the work is done. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 11]</a></li>
+        <li>A worker who only took jobs from <b>well-rated</b> requesters would have made about $2.83 an hour. A worker who only took jobs from <b>badly rated or unrated requesters </b>would have made just under $2.00. That is about 40% more. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></li>
+        <li>About one fifth of that 40% gap came from getting rejected and not paid. The other four fifths came from jobs taking longer than expected. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></li>
+        <li>Good and bad requesters advertised about the same pay. Without reviews/the plug-in, a bad requester looks the same as a good one until the work is done. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 11]</a></li>
         <li>The authors also checked that the ratings weren't just reflecting the type of job, like surveys versus image tasks. They found no link. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 11-12]</a></li>
       </ul>
-      <p class="sm dim">These are averages from Table 1 of the paper. A rejection also hurts the worker's approval rating, so the real cost is bigger than the lost wage.</p>
+      <p class="sm dim">*Rounded stats</p>
     </div>
   </div>
 </div></section>
@@ -320,20 +319,20 @@ body.editing .slide a{pointer-events:none}
   <h2>Experiment 2: giving made-up requesters a reputation</h2>
   <div class="two">
     <div>
-      <p>Experiment 1 shows the ratings are accurate, but not that workers pay attention to them. To test that, the authors made up requesters from scratch, so they could decide what each one's reputation was. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></p>
-      <p>Each fake requester had a common name, like Mark Kelly or Thomas Clark, that wasn't already rated high or low. The reviews were copied from real good and bad reviews on Turkopticon. A research assistant who saw only the text sorted 285 of the 288 reviews into the right group. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 13]</a></p>
-      <p>Every account posted the same job. Workers read a picture of a grocery receipt and typed in the beers and other alcohol on it, with their prices. It paid $0.20. Each requester posted for just one hour and then disappeared. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 13]</a></p>
+      <p>Experiment 1 shows the ratings are accurate, but if and how&nbsp; workers pay attention to them. To test that, the authors made up requesters from scratch, so they could decide what each one's reputation was more reliably. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></p>
+      <p>Each fake requester had a common name, like Mark Kelly or Thomas Clark, that wasn't already rated high or low. The reviews were copied from real good and bad reviews on Turkopticon. For accuracy, one of the research assistants who saw only the text sorted 285 of the 288 reviews into the right group. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 13]</a></p>
+      <p>Every account posted the same job: workers read a picture of a grocery receipt and typed in the beers and other alcohol on it, with their prices. It paid $0.20. Each requester posted for just one hour and then disappeared. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 13]</a></p>
       <h3 style="margin-top:14px">When each type posted</h3>
       <div class="sch2" id="sch"></div>
       <p class="sm"><span class="gr">Green</span> is a requester with good reviews, gray is no reviews and <span class="rd">red</span> is bad reviews. Each row is one day and each square is one hour. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 13, 36]</a></p>
-      <p class="sm">The order was random, but in every six-hour block each type posted exactly twice. That way no type got all the busy evening hours.</p>
+      <p class="sm">The order was random, but in every six-hour block each type posted exactly twice.</p>
     </div>
     <div>
       <div class="box">
         <h3>What a worker with the plugin saw</h3>
         <div id="mtExp"></div>
       </div>
-      <p class="sm dim" style="margin-top:8px">The authors also had three extra requesters post a 12 cent survey every hour, with reputations that never changed. How many workers showed up for those told them what a normal hour looked like. Nobody answered messages from workers, and everyone was paid at the end. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 14]</a></p>
+      <p class="sm dim" style="margin-top:8px">The authors also had three extra requesters post a 12 cent survey every hour, with reputations that never changed.&nbsp;&nbsp;<a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 14]</a></p>
     </div>
   </div>
 </div></section>
@@ -351,8 +350,8 @@ body.editing .slide a{pointer-events:none}
     <div>
       <ul>
         <li>Requesters with good reviews got about 84% more submissions than requesters with bad reviews. Requesters with no reviews got about 36% more. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 16]</a></li>
-        <li>The quality of the work didn't change. Between 61% and 63% of submissions were error-free in every group. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 15]</a></li>
-        <li>Once workers opened a job and looked at it, they accepted it at about the same rate no matter who posted it. So the reputation was doing its work before they ever opened the job. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 16]</a></li>
+        <li>The quality of the work didn't change: between 61% and 63% of submissions were error-free in every group. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 15]</a></li>
+        <li>Once workers opened a job and looked at it, they accepted it at about the same rate no matter who posted it.&nbsp;<a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 16]</a></li>
         <li>Only about half of the workers surveyed (55 of 100) mentioned using Turkopticon. If more had used it, the effect would probably be bigger, by roughly 80% according to the authors. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 17]</a></li>
       </ul>
       <h3 style="margin-top:12px">How much more a bad requester would have to pay</h3>
@@ -367,13 +366,13 @@ body.editing .slide a{pointer-events:none}
   <div class="two">
     <div>
       <p>The authors also wrote a small model to explain why a requester would pay when nobody can make them. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 18]</a></p>
-      <p>Suppose some workers can see whether a requester has ever refused to pay, and they will never work for that requester again. The other workers can't see that. A requester who cheats keeps the money this time, but loses the workers who know, so future jobs get done more slowly. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 18]</a></p>
-      <p>The requester stays honest if what they would lose later is worth more than what they save now. In the model, that works out to <code>&delta;py &minus; w &ge; 0</code>. In plain terms, the share of workers who can see reputations (p), how much the requester cares about the future (&delta;) and what the work is worth to them (y), multiplied together, have to come to more than the wage they would be skipping (w). <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 19]</a></p>
-      <p>The takeaway is that reputation works like a deposit. If enough workers can see it, losing it costs more than cheating gains.</p>
+      <p>Suppose some workers can see whether a requester has ever refused to pay, and they will never work for that requester again. The other workers can't see that, so a requester who cheats keeps the money this time, but loses the workers who know, so future jobs get done more slowly. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 18]</a></p>
+      <p>The requester stays honest if what they would lose later is worth more than what they save now. In the model, that works out to <code>δpy − w ≥ 0</code>. In plain terms, the share of workers who can see reputations (p), how much the requester cares about the future (δ) and what the work is worth to them (y), multiplied together, have to come to more than the wage they would be skipping (w). <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 19]</a></p>
+      <p>The point is that reputation is like a deposit. If enough workers can see it, losing it costs more than cheating gains.</p>
     </div>
     <div class="box">
-      <h3>Try it</h3>
-      <p class="sm dim">Move the sliders. The numbers are examples, not from the paper.</p>
+      <h3>For example:</h3>
+      <p class="sm dim"><br></p>
       <div class="ctl2"><label for="mp">Workers who can see a requester's history</label><div class="rw"><input id="mp" type="range" min="0" max="100" value="55"><output id="mpO"></output></div></div>
       <div class="ctl2"><label for="md">How much the requester cares about future jobs</label><div class="rw"><input id="md" type="range" min="10" max="99" value="90"><output id="mdO"></output></div></div>
       <div class="ctl2"><label for="my">What a finished job is worth to the requester</label><div class="rw"><input id="my" type="range" min="20" max="200" value="100"><output id="myO"></output></div></div>
@@ -394,8 +393,8 @@ body.editing .slide a{pointer-events:none}
     <div>
       <h3>Limits of what they found</h3>
       <ul>
-        <li>In Experiment 1, the authors didn't assign reputations. Requesters with good ratings might also be more generous or more patient, so the 40% gap shows that ratings are accurate, not that reputation caused the difference. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 22]</a></li>
-        <li>It used one simple job on one website for three days. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 13]</a></li>
+        <li>In Experiment 1, the authors didn't assign reputations. Requesters with good ratings might also be more generous or more patient, so the 40% gap shows that ratings are accurate, not that reputation is casual. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 22]</a></li>
+        <li>It used one job on one website for three days. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 13]</a></li>
         <li>Only about half of workers used the plugin. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 17]</a></li>
         <li>Partway through, workers started talking about the experiment on Reddit, so the last 12 hours were left out of the main results. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 14, 16]</a></li>
       </ul>
@@ -404,13 +403,13 @@ body.editing .slide a{pointer-events:none}
 </div></section>
 
 <section class="slide" data-title="What it means"><div class="wrap">
-  <h2>What this means</h2>
+  <h2>Implications</h2>
   <div class="two">
     <div>
       <ul>
         <li>For workers, shared reviews were useful. Following them was worth about $0.83 more per hour. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></li>
         <li>For employers, a good reputation worked like a higher wage. They could pay less and still get work done quickly. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 4]</a></li>
-        <li>For platforms and policy, a rating system built by workers can partly stand in for contracts and enforcement. The authors suggest Amazon could publish each requester's average pay and rejection rate, and they point to OSHA's public announcements of workplace safety violations as a similar idea. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 21, 23]</a></li>
+        <li>The authors suggest that this studies results mean that, for platforms and policy, a rating system built by workers can partly stand in for contracts and enforcement. The authors suggest Amazon could publish each requester's average pay and rejection rate, and they point to OSHA's public announcements of workplace safety violations as a similar idea. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 21, 23]</a></li>
       </ul>
     </div>
     <div class="dash">
@@ -423,30 +422,30 @@ body.editing .slide a{pointer-events:none}
   <h2>Would I use the same method?</h2>
   <div class="two">
     <div>
-      <p><b>No, but the two studies are related.</b> This paper ran experiments inside a live job market and measured what workers actually did. My study is a survey in social psychology and human-computer interaction (HCI). It looks at how interacting with AI affects people's support for egalitarian policy, and their attitudes and behaviors toward human workers.</p>
-      <p>The link is the workers. The paper asks what shapes how workers are treated and chosen. My study asks whether interacting with AI changes how people think about and treat human workers. The idea I would borrow from the paper is the comparison: change one thing, keep everything else the same, and see what shifts.</p>
-      <p>Why a survey fits my study:</p>
+      <p><b>No, but the my study and this one are related.</b> This paper ran experiments inside a live job market and measured what workers actually did. My study is a online experiment/survey in social psychology and human-computer interaction (HCI). It looks at how interacting with AI affects people's support for egalitarian policy, and their attitudes and behaviors toward human workers.</p>
+      <p>The main correlation between the two studies is workers and the use of surveys/online experiments.</p>
+      <p>Why the methods fit (or don't fit) my study:</p>
       <ul>
-        <li>I can control exactly what each person sees and does, so the groups only differ in the part I change.</li>
-        <li>Support for a policy and attitudes toward workers are things people have to tell me. I can't see them from the outside the way you can see a job being approved or rejected.</li>
-        <li>I can ask people why they answered the way they did, which the paper can't tell me.</li>
-        <li>It is much cheaper and faster than building a live platform.</li>
+        <li><b>Yes</b>: I can control exactly what each person sees and does, so the groups only differ in the part I change, which this study also did.</li>
+        <li><b>No</b>: Support for a policy and attitudes toward workers are things people have to tell me, I can't see them from the outside the way you can see a job being approved or rejected.</li>
+        <li><b>No</b>: AI models are unique in that they are not a static platform, and produce a variety of outputs, which their platform is not similar to.</li>
+        <li>Overall, I will probably not use most of this.</li>
       </ul>
-      <p>What I give up is that a survey mostly records what people say in the moment. Answers can drift toward what people think is expected, and I can't tell whether a change in attitude lasts. The paper's data shows real choices with real money.</p>
+      <p><br></p>
     </div>
     <div>
       <h3>Questions I expect</h3>
-      <details><summary>Why use fake requesters?</summary><p>Real requesters' reputations are tied up with how they actually behave. Made-up ones let the authors change the reputation and nothing else.</p></details>
-      <details><summary>Couldn't bad requesters just make a new account?</summary><p>Yes, and workers know it. When the study ran, a new account only took filling out some forms. In July 2014 Amazon started requiring a legal name, an address and a tax ID number, which made new accounts harder to create. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></p></details>
-      <details><summary>How do we know the ratings weren't just about the type of job?</summary><p>The authors checked two ways. In Experiment 1, their categories for the jobs didn't line up with the ratings <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 11-12]</a>. In Experiment 2, workers accepted the job at the same rate after previewing it, and spent the same time looking at it, no matter who posted it <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 16-17]</a>.</p></details>
-      <details><summary>Only about half of workers use Turkopticon. What does that mean for the results?</summary><p>The authors say the effect among workers who see the ratings is probably bigger, by roughly 80%. They treat that as a guess about the situation they observed, not what would happen if everyone used it. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 17]</a></p></details>
-      <details><summary>Why didn't the quality of the work change?</summary><p>Between 61% and 63% of submissions were error-free in every group. The authors point to earlier work finding that higher pay also brought in more work but not better work. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 15]</a></p></details>
+      <details><summary>Why use HTML?</summary><p>Because I'm lazy. And a loser.</p></details>
+      <details><summary>Couldn't bad requesters just make a new account?</summary><p>Yes. When the study ran, a new account only took filling out some forms, however in July 2014 Amazon started requiring a legal name, an address and a tax ID number, which made new accounts harder to create. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 12]</a></p></details>
+      <details><summary>How do we know the ratings weren't just about the type of job?</summary><p>The authors checked this two ways: in Experiment 1, their categories for the jobs didn't line up with the ratings <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 11-12]</a>. In Experiment 2, workers accepted the job at the same rate after previewing it, and spent the same time looking at it, no matter who posted it <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 16-17]</a>.</p></details>
+      <details><summary>Only about half of workers use Turkopticon. What does that mean for the results?</summary><p>The authors say the effect among workers who see the ratings is probably bigger, by roughly 80%. They also acknowledged that this paper can't be generalized for all workers. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 17]</a></p></details>
+      <details><summary>Why didn't the quality of the work change?</summary><p>Between 61% and 63% of submissions were error-free in every group, which the authors attribute to earlier work finding that higher pay also brought in more work but not better work. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 15]</a></p></details>
       <details><summary>Is $0.20 a realistic wage?</summary><p>The job took about two minutes on average, between 113 and 136 seconds depending on the group <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 15]</a>. By my math, $0.20 comes to roughly $5 to $6 an hour. The paper cites a median reservation wage of $1.38 an hour for MTurk workers <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, pp. 5-6]</a>.</p></details>
-      <details><summary>Was the model tested?</summary><p>Not directly. The authors present it as consistent with their results rather than estimating it. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 5]</a></p></details>
-      <details><summary>Does this apply outside MTurk?</summary><p>The authors say workers everywhere struggle to know what an employer is like, but it is much harder to change an employer's reputation cleanly in regular jobs. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 22]</a></p></details>
-      <details><summary>Why did they use a count regression?</summary><p>They were counting how many workers showed up each hour. The data didn't fit the basic version of the model, probably because of time-of-day effects, so they used a more flexible one. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 15]</a></p></details>
-      <details><summary>Why would workers leave reviews at all?</summary><p>It takes time and can send competitors to the good jobs. The authors guess it could be to help other workers or to punish bad requesters, but they don't test it. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 21]</a></p></details>
-      <details><summary>How does this connect to your own study?</summary><p>Both ask how information or experiences shape what people do around workers. Mine is a survey about how interacting with AI affects support for egalitarian policy and attitudes and behaviors toward human workers, so I borrow the paper's comparison idea but ask people directly.</p></details>
+      <details><summary>Was the model tested?</summary><p>Not directly, the authors present it as consistent with their results rather than estimating it, but either way, they're not economists so shrug.&nbsp;<a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 5]</a></p></details>
+      <details><summary>Does this apply outside MTurk?</summary><p>Somewhat. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 22]</a></p></details>
+      <details><summary>Why did they use a count regression?</summary><p>They were counting how many workers showed up each hour, and the data didn't fit the basic version of the model, probably because of time-of-day effects, so they used a more flexible one. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 15]</a></p></details>
+      <details><summary>Why would workers leave reviews at all?</summary><p>"It takes time and can send competitors to the good jobs". The authors guess it could be to help other workers or to punish bad requesters, but they don't test it or cite anything relevant so. <a class="c" href="https://docs.iza.org/dp9501.pdf" target="_blank" rel="noopener" title="Benson, Sojourner and Umyarov (2015)">[1, p. 21]</a></p></details>
+      <details><summary>How does this connect to your own study?</summary><p>Both ask how information or experiences shape what people do around workers.</p></details>
     </div>
   </div>
 </div></section>
@@ -661,6 +660,4 @@ $('#codeClose').onclick=()=>{$('#codebox').hidden=true};
 
 let st=1;try{st=parseInt(location.hash.slice(1))||1}catch(e){}
 go(Math.min(Math.max(st-1,0),slides.length-1));
-</script>
-</body>
-</html>
+</script></body></html>
